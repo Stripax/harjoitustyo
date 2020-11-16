@@ -1,0 +1,471 @@
+{
+  "exams": [
+    {
+      "id": "51824a14-858e-4205-bada-89e406ddb185",
+      "exam": "Javascript perusteet",
+      "questions": [
+        {
+          "id": "05ab4389-aeb5-47ce-a30b-0c601b76ca01",
+          "question": "Kysymys 1 Javascript",
+          "choices": [
+            {
+              "id": "358105b8-890a-409a-b58d-08a9b7831601",
+              "answer": "Kysymys 1 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "bcf9c448-5edc-482e-843f-89ba8a45dafc",
+              "answer": "Kysymys 1 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "5140df35-906b-48fd-ae29-e6c732322798",
+              "answer": "Kysymys 1 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "2b0d8b19-38be-48f5-be2f-adc044dd34e4",
+              "answer": "Kysymys 1 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "c1a045b6-1f74-416f-aa90-3973590980f6",
+          "question": "Kysymys 2 Javascript",
+          "choices": [
+            {
+              "id": "f9b23e76-b302-46e7-b615-f316a1d2ddf3",
+              "answer": "Kysymys 2 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "93d5111f-48de-4904-ad33-4af46954b5e5",
+              "answer": "Kysymys 2 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "708cf634-3b28-4ac0-b11e-5748ab7a3f7f",
+              "answer": "Kysymys 2 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "639e9153-7220-4f96-8982-480cdbb91442",
+          "question": "Kysymys 3 Javascript",
+          "choices": [
+            {
+              "id": "82b18429-7553-41d6-89eb-d76cc6fbd22e",
+              "answer": "Kysymys 3 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "f8fd298c-fcc4-48af-8861-6cd20af4b892",
+              "answer": "Kysymys 3 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "4318c229-3587-42f3-920b-f7cbe4cc6f5f",
+              "answer": "Kysymys 3 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "28759c30-3cc2-4333-b856-cb0752a58d7d",
+              "answer": "Kysymys 3 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "9848eeed-ff63-4735-8162-9b2254919c80",
+              "answer": "Kysymys 3 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "a322138a-32f2-4e98-8e9a-3f4d374bb4a2",
+          "question": "Kysymys 4 Javascript",
+          "choices": [
+            {
+              "id": "e5afca13-bd46-434b-a050-dc812f3e4d42",
+              "answer": "Kysymys 4 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "8bb0d630-3ee8-42b2-957c-c63494a54b7b",
+              "answer": "Kysymys 4 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "4e88be23-f190-4213-ad3b-023e1407f603",
+              "answer": "Kysymys 4 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "48339458-46be-4231-a816-766213ef72bc",
+              "answer": "Kysymys 4 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "795dea99-6ab5-4938-b2ee-687fc37ca6d6",
+              "answer": "Kysymys 4 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e62ba84b-50c6-4f4c-affb-2396c6ff371d",
+      "exam": "C# perusteet",
+      "questions": [
+        {
+          "id": "a3ac2b61-676c-404a-92b4-3e988313d625",
+          "question": "Kysymys 1 CSharp",
+          "choices": [
+            {
+              "id": "3704eea6-47aa-4b04-a160-7ff8e2a4c0b9",
+              "answer": "Kysymys 1 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "681f9f91-b9c4-4d2f-bc01-d2e7f58269e8",
+              "answer": "Kysymys 1 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "fa82bd7b-5888-41f0-ab0d-9bd520276da9",
+              "answer": "Kysymys 1 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "ef2f2a44-2745-4cff-934b-c65d936b7ffb",
+              "answer": "Kysymys 1 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "d72777a8-c9d0-4ffe-abf6-a7161ab0f38a",
+          "question": "Kysymys 2 CSharp",
+          "choices": [
+            {
+              "id": "5774b3e1-ee57-478d-ac31-371a9c21b52c",
+              "answer": "Kysymys 2 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "21952f7f-56f4-4900-b872-40af8ca4b12b",
+              "answer": "Kysymys 2 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "92bf580c-0962-43d3-a9b8-76830c183991",
+              "answer": "Kysymys 2 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "336ca6ac-1d40-47d0-9dbc-8422494ddf2f",
+          "question": "Kysymys 3 CSharp",
+          "choices": [
+            {
+              "id": "d2d94b7f-745d-4d48-8873-55500f230cbc",
+              "answer": "Kysymys 3 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "fc3bc107-88cf-4fa0-9f76-162d68e990ee",
+              "answer": "Kysymys 3 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "5ec57794-f1f8-42d3-b8c1-30e0ba1980c7",
+              "answer": "Kysymys 3 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "5de33a20-5953-4d15-b86d-789999e66d4e",
+              "answer": "Kysymys 3 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "d42e0668-9609-4b4c-af8d-3e34649776d4",
+              "answer": "Kysymys 3 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c404ec37-2610-451d-9a5b-c3403755fa13",
+      "exam": "HTML&CSS perusteet",
+      "questions": [
+        {
+          "id": "54ec59eb-6277-4739-be88-f265bd5b734e",
+          "question": "Kysymys 1 HTML-CSS",
+          "choices": [
+            {
+              "id": "5b2e0371-674d-4abd-b9e7-51ac34794ca4",
+              "answer": "Kysymys 1 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "e86c16c3-bab6-443a-a5c8-a5858165c508",
+              "answer": "Kysymys 1 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "3c82b926-15a7-41bf-836c-00ca8c1025ff",
+              "answer": "Kysymys 1 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "55fe8054-7734-44c4-9464-d06029c771d1",
+              "answer": "Kysymys 1 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "2a564b25-e711-410f-bce1-7614d5b86ec9",
+          "question": "Kysymys 2 HTML-CSS",
+          "choices": [
+            {
+              "id": "786846ec-f0ea-4f41-98c5-e0da558c5181",
+              "answer": "Kysymys 2 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "1531d346-6c98-4075-9e6a-0afd941ffa3b",
+              "answer": "Kysymys 2 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "a8d14ce4-4a51-42de-8ea2-2f4c26b1c0af",
+              "answer": "Kysymys 2 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "b8ff251c-5d37-4c29-949e-3718dea1dbe8",
+          "question": "Kysymys 3 HTML-CSS",
+          "choices": [
+            {
+              "id": "16e7dbb5-3573-4b96-a2f5-adc1aa0d5308",
+              "answer": "Kysymys 3 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "f257fcd7-7731-4a1f-af61-2492c578a130",
+              "answer": "Kysymys 3 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "13b18a2e-7479-4d0e-a2ac-eed7c8f65509",
+              "answer": "Kysymys 3 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "f954bc40-4b72-4e21-bfd1-2442e066c863",
+              "answer": "Kysymys 3 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "56478710-ebb6-461f-aae7-ded966487d6c",
+              "answer": "Kysymys 3 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "3668c141-0abc-461a-b283-2d91875fa99a",
+          "question": "Kysymys 4 HTML-CSS",
+          "choices": [
+            {
+              "id": "ff2339d7-e445-44fb-915b-72b7a0681a73",
+              "answer": "Kysymys 4 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "01fb66bd-23ea-4f75-887c-64e240b158af",
+              "answer": "Kysymys 4 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "5aefbc8e-b263-499b-a6a1-7c34751d0cbe",
+              "answer": "Kysymys 4 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "58e60a2a-b11d-4e20-b86f-1ac3a37af043",
+              "answer": "Kysymys 4 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "145f8474-9e10-4186-9cb8-28c0f0597b6d",
+              "answer": "Kysymys 4 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "fdb1a5b5-a015-4b17-82b0-07229418e152",
+          "question": "Kysymys 5 HTML-CSS",
+          "choices": [
+            {
+              "id": "49ac0b18-0d4d-4c6c-8227-31d0c2ad4850",
+              "answer": "Kysymys 5 Vastaus nro 1",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "3f07d5eb-3e66-403d-83ef-f71000416d47",
+              "answer": "Kysymys 5 Vastaus nro 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "5fa29f66-bc28-4a71-91bf-435c4794968e",
+              "answer": "Kysymys 5 Vastaus nro 3",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "0f8db0af-4b10-4110-9d29-edc0a35c6cfc",
+              "answer": "Kysymys 5 Vastaus nro 4",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "d70913ca-a57e-441b-bfa7-7161a36c962e",
+              "answer": "Kysymys 5 Vastaus nro 5",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0a2d172b-ab72-4caa-aa08-f78f298b5886",
+      "exam": "react perusteet",
+      "questions": [
+        {
+          "id": "4bee09aa-9c15-4bd3-9c41-3aef445278fd",
+          "question": "new exam question 1",
+          "choices": [
+            {
+              "id": "74f471c0-743e-40a3-90dc-e72cd4e28957",
+              "answer": "new exam question 1 answer 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "6a0e08d1-d525-4af7-8c07-402b02bb2c91",
+              "answer": "new exam question 1 answer 2",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "560b81c1-564f-48e4-b893-cc99a90fdd25",
+              "answer": "new exam question 1 answer 3",
+              "isSelected": false,
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "6ba02736-ee1b-46ad-b8fe-fe55d9cae53c",
+          "question": "new exam question 2",
+          "choices": [
+            {
+              "id": "70cc5a4d-ff75-4db5-93ec-3ab9da69d477",
+              "answer": "new exam question 2 answer 1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "b56d36ca-fb4e-4e95-a42a-a5d6b5cc4f5b",
+              "answer": "new exam question 2 answer 2",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "4110be5e-42c0-4bcb-a21f-1c8701398bb7",
+              "answer": "new exam question 2 answer 3",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "d5b04371-87ab-497c-ad2d-75ed0602ab60",
+              "answer": "new exam question 2 answer 4",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "5703af37-bb2e-4bf2-8b49-bc9fa6a96972",
+          "question": "uus",
+          "choices": [
+            {
+              "answer": "",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

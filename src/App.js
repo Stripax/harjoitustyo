@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 import './App.css';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -20,104 +22,136 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false)
 
   const exampleQuestions = [ {
-    exam: "Javascript perusteet", questions: [ {
-      question: "Kysymys 1 Javascript", 
+    id: uuid(), exam: "Javascript perusteet", questions: [ {
+      id: uuid(), question: "Kysymys 1 Javascript", 
         choices: [ { 
-          answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-      question: "Kysymys 2 Javascript",
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
+      id: uuid(), question: "Kysymys 2 Javascript",
         choices: [ { 
-          answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-      question: "Kysymys 3 Javascript",
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
+      id: uuid(), question: "Kysymys 3 Javascript",
         choices: [ { 
-          answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-      question: "Kysymys 4 Javascript",
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
+      id: uuid(), question: "Kysymys 4 Javascript",
         choices: [ { 
-          answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
 
-    exam: "C# perusteet", questions: [ {
-      question: "Kysymys 1 CSharp", 
+    id: uuid(), exam: "C# perusteet", questions: [ {
+      id: uuid(), question: "Kysymys 1 CSharp", 
         choices: [ { 
-          answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-      question: "Kysymys 2 CSharp",
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
+      id: uuid(), question: "Kysymys 2 CSharp",
         choices: [ { 
-          answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-      question: "Kysymys 3 CSharp",
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
+      id: uuid(), question: "Kysymys 3 CSharp",
         choices: [ { 
-          answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
 
-    exam: "HTML&CSS perusteet", questions: [ {
-      question: "Kysymys 1 HTML-CSS", 
+    id: uuid(), exam: "HTML&CSS perusteet", questions: [ {
+      id: uuid(), question: "Kysymys 1 HTML-CSS", 
         choices: [ { 
-          answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-    question: "Kysymys 2 HTML-CSS",
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
+    id: uuid(), question: "Kysymys 2 HTML-CSS",
         choices: [ { 
-          answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-    question: "Kysymys 3 HTML-CSS",
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
+    id: uuid(), question: "Kysymys 3 HTML-CSS",
         choices: [ { 
-          answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-    question: "Kysymys 4 HTML-CSS",
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
+    id: uuid(), question: "Kysymys 4 HTML-CSS",
         choices: [ { 
-          answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-    question: "Kysymys 5 HTML-CSS",
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
+    id: uuid(), question: "Kysymys 5 HTML-CSS",
         choices: [ { 
-          answer: "Kysymys 5 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          answer: "Kysymys 5 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          answer: "Kysymys 5 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 5 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          answer: "Kysymys 5 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] } ]
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 2", isSelected: false, isCorrect: false }, {
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] } ]
 
   useEffect (() => {
-    let storedQuestions = window.localStorage
-    let tempStored = JSON.parse(storedQuestions.getItem("examData"))
 
-    if (tempStored == null) {
-      storedQuestions.setItem("examData", JSON.stringify(exampleQuestions))
-      tempStored = exampleQuestions
+    const createData = async() => {
+      try {
+        let result = await axios.post("http://localhost:3001/exams", exampleQuestions)
+        setExamData(exampleQuestions)
+        setIsDataInitialized(true)
+      }
+      catch(ex) {
+        alert(ex.message)
+      }
     }
 
-    setExamData(tempStored)
-    setIsDataInitialized(true)
+    const fetchData = async() => {
+      try {
+        let result = await axios.get("http://localhost:3001/exams")
+
+        if (result.data.length > 0) {
+          setExamData(result.data)
+          setIsDataInitialized(true)
+        }
+        else {
+          // eslint-disable-next-line no-throw-literal
+          throw("Empty dataset")
+        }
+      }
+      catch (ex) {
+        createData()
+        alert(ex.message)
+      }
+    }
+
+    fetchData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect (() => {
+
+    const updateDate = async() => {
+      try {
+        let result = await axios.put("http://localhost:3001/exams", examData)
+      }
+      catch(ex) {
+        alert(ex.message)
+      }
+    }
+
     if (isDataInitialized) {
-      window.localStorage.setItem("examData", JSON.stringify(examData))
+      updateDate();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examData])
@@ -128,16 +162,16 @@ function App() {
     let tempData = JSON.parse(JSON.stringify(examData))
     let newExamName = prompt("Anna uuden tentin nimi", "Uusi tentti")
 
-    let newExam = { exam: newExamName, questions: [ { 
-                    question: "new exam question 1", choices: [ { 
-                    answer: "new exam question 1 answer 1", isSelected: false, isCorrect: false }, { 
-                    answer: "new exam question 1 answer 2", isSelected: false, isCorrect: false }, { 
-                    answer: "new exam question 1 answer 3", isSelected: false, isCorrect: true } ] }, { 
-                    question: "new exam question 2", choices: [ { 
-                    answer: "new exam question 2 answer 1", isSelected: false, isCorrect: false }, { 
-                    answer: "new exam question 2 answer 2", isSelected: false, isCorrect: true }, { 
-                    answer: "new exam question 2 answer 3", isSelected: false, isCorrect: false }, { 
-                    answer: "new exam question 2 answer 4", isSelected: false, isCorrect: false } ] } ] }
+    let newExam = { id: uuid(), exam: newExamName, questions: [ { 
+                    id: uuid(), question: "new exam question 1", choices: [ { 
+                    id: uuid(), answer: "new exam question 1 answer 1", isSelected: false, isCorrect: false }, { 
+                    id: uuid(), answer: "new exam question 1 answer 2", isSelected: false, isCorrect: false }, { 
+                    id: uuid(), answer: "new exam question 1 answer 3", isSelected: false, isCorrect: true } ] }, { 
+                    id: uuid(), question: "new exam question 2", choices: [ { 
+                    id: uuid(), answer: "new exam question 2 answer 1", isSelected: false, isCorrect: false }, { 
+                    id: uuid(), answer: "new exam question 2 answer 2", isSelected: false, isCorrect: true }, { 
+                    id: uuid(), answer: "new exam question 2 answer 3", isSelected: false, isCorrect: false }, { 
+                    id: uuid(), answer: "new exam question 2 answer 4", isSelected: false, isCorrect: false } ] } ] }
 
     tempData.push(newExam)
     setExamData(tempData)
@@ -146,19 +180,19 @@ function App() {
   const editQuestions = () => {
     if (activeExam >= 0) {
       return examData[activeExam].questions.map((item, questionIndex) =>
-        <Paper key = {questionIndex} className = "edit-questions">
-          <Button key = {"btn-delete-question"} color = "secondary" startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteQuestion(questionIndex)}></Button>
+        <Paper key = {uuid()} className = "edit-questions">
+          <Button key = {uuid()} color = "secondary" startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteQuestion(questionIndex)}></Button>
           <input type = "text" size = "50" value = {item.question} onChange = {(event) => editQuestionText(event, questionIndex)} />          
           <br></br>
           { item.choices.map((i, answerIndex) => 
             <div>
-              <GreenCheckbox checked = {i.isCorrect} onClick = {(event) => changeCorrectAnswer(event, questionIndex, answerIndex)}></GreenCheckbox>
-              <input type = "text" size = "50" value = {i.answer} onChange = {(event) => editAnswerText(event, questionIndex, answerIndex)} />
-              <Button key = {"btn-delete-answer"} startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteAnswer(questionIndex, answerIndex)}></Button>
+              <GreenCheckbox key = {uuid()} checked = {i.isCorrect} onClick = {(event) => changeCorrectAnswer(event, questionIndex, answerIndex)}></GreenCheckbox>
+              <input key = {uuid()} type = "text" size = "50" value = {i.answer} onChange = {(event) => editAnswerText(event, questionIndex, answerIndex)} />
+              <Button key = {uuid()} startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteAnswer(questionIndex, answerIndex)}></Button>
               <br></br>
             </div>
           ) }
-          <Button key = {"btn-add-answer"} startIcon = {<AddCircleOutlineIcon />} onClick = {() => addAnswer(questionIndex)}></Button>
+          <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => addAnswer(questionIndex)}></Button>
         </Paper>)
     }
   }
@@ -195,14 +229,14 @@ function App() {
 
   const addQuestion = () => {
     let tempData = JSON.parse(JSON.stringify(examData))
-    let tempQuestion = { question: "", choices: [ { answer: "", isSelected: false, isCorrect: false } ] }
+    let tempQuestion = { id: uuid(), question: "", choices: [ { answer: "", isSelected: false, isCorrect: false } ] }
     tempData[activeExam].questions.push(tempQuestion)
     setExamData(tempData)
   }
 
   const addAnswer = (questionIndex) => {
     let tempData = JSON.parse(JSON.stringify(examData))
-    let tempAnswer = { answer: "", isSelected: false, isCorrect: false }
+    let tempAnswer = { id:uuid(), answer: "", isSelected: false, isCorrect: false }
     tempData[activeExam].questions[questionIndex].choices.push(tempAnswer)
     setExamData(tempData)
   }
@@ -211,13 +245,13 @@ function App() {
 
   const showExamButtons = () => {
     return examData.map((item, examIndex) => 
-      <Button key = {examIndex} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam }</Button>)
+      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam }</Button>)
   }
 
   const showQuestions = () => {
     if (activeExam >= 0) {
       return examData[activeExam].questions.map((item, questionIndex) =>
-      <Paper key = {questionIndex} className = "question">
+      <Paper key = {uuid()} className = "question">
         <h2 className = "question-header">{ item.question }</h2>
         { showChoices(item.choices, questionIndex) }
       </Paper>)
@@ -227,13 +261,13 @@ function App() {
   const showChoices = (choices, questionIndex) => {
     if (activeExam >= 0) {
       return choices.map((item, answerIndex) => 
-      <div key = {answerIndex}>
+      <div key = {uuid()}>
         <FormControlLabel
           control = {<div>
             { isShowCorrectAnswers === false ? 
-              <Checkbox checked = {choices[answerIndex].isSelected} onClick = {e => checkBoxClicked(e, questionIndex, answerIndex)} /> : 
-              <Checkbox color = "primary" checked = {choices[answerIndex].isSelected} disabled /> }
-            { isShowCorrectAnswers === false ? "" : <GreenCheckbox checked = {choices[answerIndex].isCorrect} disabled /> }
+              <Checkbox key = {uuid()} checked = {choices[answerIndex].isSelected} onClick = {e => checkBoxClicked(e, questionIndex, answerIndex)} /> : 
+              <Checkbox key = {uuid()} color = "primary" checked = {choices[answerIndex].isSelected} disabled /> }
+            { isShowCorrectAnswers === false ? "" : <GreenCheckbox key = {uuid()} checked = {choices[answerIndex].isCorrect} disabled /> }
                     </div>}
           label = {item.answer} />
       </div>)
@@ -260,25 +294,25 @@ function App() {
     <div className = "App">
       <div className = "header">
         <div className = "header-buttons">
-          <Button key = {"btn-exams"} color = "inherit" onClick = {() => setActiveExam(-1)}>Tentit</Button>
-          <Button key = {"btn-info"} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>Tietoa sovelluksesta</Button>
-          <Button key = {"btn-admin"} color = "inherit" onClick = {() => setIsAdmin(true)}>Admin</Button>
-          <Button key = {"btn-exit"} color = "inherit" onClick = {() => setIsAdmin(false)}>Poistu</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>Tentit</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>Tietoa sovelluksesta</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => setIsAdmin(true)}>Admin</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => setIsAdmin(false)}>Poistu</Button>
         </div>
       </div>
 
       <div className = "exam-buttons">
         { showExamButtons() }
-        { isAdmin && <Button key = {"btn-add-exam"} color = "primary" startIcon = {<AddCircleOutlineIcon />}
+        { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />}
                       onClick = {() => addExamButton()}></Button> }
       </div>
 
       <div className = "main-body">
         <Grid container direction = "column" justify = "center" alignItems = "stretch">
           <Grid item xs = {12}>
-            { examData.length > 0 && !isAdmin && showQuestions() }
-            { examData.length > 0 && isAdmin && editQuestions() }
-            { examData.length > 0 && isAdmin && <Button key = {"btn-add-question"} startIcon = {<AddCircleOutlineIcon />}
+            { !isAdmin && showQuestions() }
+            { isAdmin && editQuestions() }
+            { isAdmin && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />}
                                                         onClick = {() => addQuestion()}></Button> }
           </Grid>
         </Grid>
@@ -286,7 +320,7 @@ function App() {
 
       <div className = "answers-button">
         { activeExam >= 0 && !isAdmin &&
-          <Button variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä tulokset</Button> }
+          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä tulokset</Button> }
       </div>
       
     </div>
