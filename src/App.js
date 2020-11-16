@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 import './App.css';
@@ -13,9 +13,61 @@ import { green } from '@material-ui/core/colors';
 import { DeleteForeverOutlined } from '@material-ui/icons';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
+function reducer(state, action) {
+  let deepCopy = JSON.parse(JSON.stringify(state))
+
+  switch(action.type) {
+    case 'changeQuestion':
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].question = action.data.newQuestionText
+      return deepCopy
+
+    case 'changeAnswerText':
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices[action.data.answerIndex].answer = action.data.newAnswerText
+      return deepCopy
+    
+    case 'changeCorrectAnswer':
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices[action.data.answerIndex].isCorrect = action.data.checked
+      return deepCopy
+
+    case 'deleteQuestion':
+      deepCopy[action.data.activeExam].questions.splice(action.data.questionIndex, 1)
+      return deepCopy
+
+    case 'deleteAnswer':
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices.splice(action.data.answerIndex, 1)
+      return deepCopy
+
+    case 'addExam':
+      let newExamName = prompt("Anna uuden tentin nimi", "Uusi tentti")
+      let newExam = { id: uuid(), exam: newExamName, questions: [] }
+      deepCopy.push(newExam)
+      return deepCopy
+
+    case 'addQuestion':
+      let newQuestion = { id: uuid(), question: "", choices: [] }
+      deepCopy[action.data.activeExam].questions.push(newQuestion)
+      return deepCopy
+
+    case 'addAnswer':
+      let newAnswer = { id: uuid(), answer: "", isSelected: false, isCorrect: false }
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices.push(newAnswer)
+      return deepCopy
+
+    case 'checkBoxClicked':
+      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices[action.data.answerIndex].isSelected = action.data.checked
+      return deepCopy
+
+    case 'initializeData':
+      return action.data
+
+    default: 
+      throw new Error()
+  }
+}
+
 function App() {
 
-  const [examData, setExamData] = useState([])
+  const [state, dispatch] = useReducer(reducer, [])
   const [activeExam, setActiveExam] = useState(-1)
   const [isDataInitialized, setIsDataInitialized] = useState(false)
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
@@ -106,9 +158,10 @@ function App() {
   useEffect (() => {
 
     const createData = async() => {
+
       try {
         let result = await axios.post("http://localhost:3001/exams", exampleQuestions)
-        setExamData(exampleQuestions)
+        dispatch({ type: 'initializeData', data: exampleQuestions })
         setIsDataInitialized(true)
       }
       catch(ex) {
@@ -117,11 +170,12 @@ function App() {
     }
 
     const fetchData = async() => {
+
       try {
         let result = await axios.get("http://localhost:3001/exams")
 
         if (result.data.length > 0) {
-          setExamData(result.data)
+          dispatch({ type: 'initializeData', data: result.data })
           setIsDataInitialized(true)
         }
         else {
@@ -141,9 +195,9 @@ function App() {
 
   useEffect (() => {
 
-    const updateDate = async() => {
+    const updateData = async() => {
       try {
-        let result = await axios.put("http://localhost:3001/exams", examData)
+        let result = await axios.put("http://localhost:3001/exams", state)
       }
       catch(ex) {
         alert(ex.message)
@@ -151,107 +205,45 @@ function App() {
     }
 
     if (isDataInitialized) {
-      updateDate();
+      updateData();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [examData])
+  }, [state])
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
 
-  const addExamButton = () => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    let newExamName = prompt("Anna uuden tentin nimi", "Uusi tentti")
-
-    let newExam = { id: uuid(), exam: newExamName, questions: [ { 
-                    id: uuid(), question: "new exam question 1", choices: [ { 
-                    id: uuid(), answer: "new exam question 1 answer 1", isSelected: false, isCorrect: false }, { 
-                    id: uuid(), answer: "new exam question 1 answer 2", isSelected: false, isCorrect: false }, { 
-                    id: uuid(), answer: "new exam question 1 answer 3", isSelected: false, isCorrect: true } ] }, { 
-                    id: uuid(), question: "new exam question 2", choices: [ { 
-                    id: uuid(), answer: "new exam question 2 answer 1", isSelected: false, isCorrect: false }, { 
-                    id: uuid(), answer: "new exam question 2 answer 2", isSelected: false, isCorrect: true }, { 
-                    id: uuid(), answer: "new exam question 2 answer 3", isSelected: false, isCorrect: false }, { 
-                    id: uuid(), answer: "new exam question 2 answer 4", isSelected: false, isCorrect: false } ] } ] }
-
-    tempData.push(newExam)
-    setExamData(tempData)
-  }
 
   const editQuestions = () => {
     if (activeExam >= 0) {
-      return examData[activeExam].questions.map((item, questionIndex) =>
-        <Paper key = {uuid()} className = "edit-questions">
-          <Button key = {uuid()} color = "secondary" startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteQuestion(questionIndex)}></Button>
-          <input type = "text" size = "50" value = {item.question} onChange = {(event) => editQuestionText(event, questionIndex)} />          
+      return state[activeExam].questions.map((item, questionIndex) =>
+        <Paper key = {item.id} className = "edit-questions">
+          <Button color = "secondary" startIcon = {<DeleteForeverOutlined />} onClick = {() => dispatch({ type: 'deleteQuestion', data: { activeExam: activeExam, questionIndex: questionIndex }}) }></Button>
+          <input type = "text" size = "50" value = {item.question} onChange = {(event) => dispatch({ type: 'changeQuestion', data: { activeExam: activeExam, newQuestionText: event.target.value, questionIndex: questionIndex }})} />          
           <br></br>
           { item.choices.map((i, answerIndex) => 
             <div>
-              <GreenCheckbox key = {uuid()} checked = {i.isCorrect} onClick = {(event) => changeCorrectAnswer(event, questionIndex, answerIndex)}></GreenCheckbox>
-              <input key = {uuid()} type = "text" size = "50" value = {i.answer} onChange = {(event) => editAnswerText(event, questionIndex, answerIndex)} />
-              <Button key = {uuid()} startIcon = {<DeleteForeverOutlined />} onClick = {() => deleteAnswer(questionIndex, answerIndex)}></Button>
+              <GreenCheckbox checked = {i.isCorrect} onClick = {(event) => dispatch({ type: 'changeCorrectAnswer', data: { checked: event.target.checked, activeExam: activeExam, questionIndex: questionIndex, answerIndex: answerIndex }})}></GreenCheckbox>
+              <input key = {i.id} type = "text" size = "50" value = {i.answer} onChange = {(event) => dispatch({ type: 'changeAnswerText', data: { activeExam: activeExam, newAnswerText: event.target.value, questionIndex: questionIndex, answerIndex: answerIndex}})} />
+              <Button startIcon = {<DeleteForeverOutlined />} onClick = {() => dispatch({ type: 'deleteAnswer', data: { activeExam: activeExam, questionIndex: questionIndex, answerIndex: answerIndex }})}></Button>
               <br></br>
             </div>
           ) }
-          <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => addAnswer(questionIndex)}></Button>
+          <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addAnswer', data: { activeExam: activeExam, questionIndex: questionIndex }})}></Button>
         </Paper>)
     }
-  }
-
-  const changeCorrectAnswer = (event, questionIndex, answerIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    tempData[activeExam].questions[questionIndex].choices[answerIndex].isCorrect = event.target.checked
-    setExamData(tempData)
-  }
-
-  const deleteQuestion = (questionIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    tempData[activeExam].questions.splice(questionIndex, 1)
-    setExamData(tempData)
-  }
-
-  const deleteAnswer = (questionIndex, answerIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    tempData[activeExam].questions[questionIndex].choices.splice(answerIndex, 1)
-    setExamData(tempData)
-  }
-
-  const editQuestionText = (event, questionIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    tempData[activeExam].questions[questionIndex].question = event.target.value
-    setExamData(tempData)
-  }
-
-  const editAnswerText = (event, questionIndex, answerIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    tempData[activeExam].questions[questionIndex].choices[answerIndex].answer = event.target.value
-    setExamData(tempData)
-  }
-
-  const addQuestion = () => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    let tempQuestion = { id: uuid(), question: "", choices: [ { answer: "", isSelected: false, isCorrect: false } ] }
-    tempData[activeExam].questions.push(tempQuestion)
-    setExamData(tempData)
-  }
-
-  const addAnswer = (questionIndex) => {
-    let tempData = JSON.parse(JSON.stringify(examData))
-    let tempAnswer = { id:uuid(), answer: "", isSelected: false, isCorrect: false }
-    tempData[activeExam].questions[questionIndex].choices.push(tempAnswer)
-    setExamData(tempData)
   }
 
   // ------------------- USER PART OF THE CODE ---------------------------
 
   const showExamButtons = () => {
-    return examData.map((item, examIndex) => 
+    return state.map((item, examIndex) => 
       <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam }</Button>)
   }
 
   const showQuestions = () => {
     if (activeExam >= 0) {
-      return examData[activeExam].questions.map((item, questionIndex) =>
-      <Paper key = {uuid()} className = "question">
+      return state[activeExam].questions.map((item, questionIndex) =>
+      <Paper key = {item.id} className = "question">
         <h2 className = "question-header">{ item.question }</h2>
         { showChoices(item.choices, questionIndex) }
       </Paper>)
@@ -261,24 +253,18 @@ function App() {
   const showChoices = (choices, questionIndex) => {
     if (activeExam >= 0) {
       return choices.map((item, answerIndex) => 
-      <div key = {uuid()}>
+      <div key = {item.id}>
         <FormControlLabel
           control = {<div>
             { isShowCorrectAnswers === false ? 
-              <Checkbox key = {uuid()} checked = {choices[answerIndex].isSelected} onClick = {e => checkBoxClicked(e, questionIndex, answerIndex)} /> : 
-              <Checkbox key = {uuid()} color = "primary" checked = {choices[answerIndex].isSelected} disabled /> }
-            { isShowCorrectAnswers === false ? "" : <GreenCheckbox key = {uuid()} checked = {choices[answerIndex].isCorrect} disabled /> }
+              <Checkbox checked = {choices[answerIndex].isSelected} onClick = {(event) => dispatch({ type: 'checkBoxClicked', data: { checked: event.target.checked, activeExam: activeExam, questionIndex: questionIndex, answerIndex: answerIndex }})} /> : 
+              <Checkbox color = "primary" checked = {choices[answerIndex].isSelected} disabled /> }
+            { isShowCorrectAnswers === false ? "" : <GreenCheckbox checked = {choices[answerIndex].isCorrect} disabled /> }
                     </div>}
           label = {item.answer} />
       </div>)
     }
   }
-
-   const checkBoxClicked = (e, questionIndex, answerIndex) => {
-        let tempList = JSON.parse(JSON.stringify(examData))
-        tempList[activeExam].questions[questionIndex].choices[answerIndex].isSelected = e.target.checked
-        setExamData(tempList)
-    }
 
   const GreenCheckbox = withStyles({
     root: {
@@ -303,8 +289,7 @@ function App() {
 
       <div className = "exam-buttons">
         { showExamButtons() }
-        { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />}
-                      onClick = {() => addExamButton()}></Button> }
+        { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addExam' })}></Button> }
       </div>
 
       <div className = "main-body">
@@ -312,8 +297,7 @@ function App() {
           <Grid item xs = {12}>
             { !isAdmin && showQuestions() }
             { isAdmin && editQuestions() }
-            { isAdmin && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />}
-                                                        onClick = {() => addQuestion()}></Button> }
+            { isAdmin && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
           </Grid>
         </Grid>
       </div>
