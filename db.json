@@ -1,33 +1,33 @@
 {
   "exams": [
     {
-      "id": "9f040b1e-45a3-4a35-a3a3-426ba5c94999",
+      "id": "43c9d54b-41b3-4207-8138-082d1c045f33",
       "exam": "Javascript perusteet",
       "questions": [
         {
-          "id": "1b566832-ad5e-47a8-9a14-7439cdbab55b",
+          "id": "90ec2131-0269-43d6-b1dd-edda7da663e8",
           "question": "Kysymys 1 Javascript",
           "choices": [
             {
-              "id": "bd4a3c8e-7d0c-485c-95df-102bdb5cd641",
+              "id": "5e6d7f60-e691-4e50-bc95-fb54cfd23eef",
               "answer": "Kysymys 1 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "16042b0b-0fdb-4468-929f-2b77c0cd54be",
+              "id": "a639131d-2e87-4d54-a5a6-69955d7857af",
               "answer": "Kysymys 1 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "252e3ee1-c117-4c97-a1fc-0c3843d896f7",
+              "id": "50471756-e8e6-437c-9617-1b5e30e73606",
               "answer": "Kysymys 1 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "02494be9-bde2-4cf3-9193-05e6fe55a1fa",
+              "id": "a5ed11aa-4e4f-4133-9832-adcd76a27170",
               "answer": "Kysymys 1 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
@@ -35,23 +35,23 @@
           ]
         },
         {
-          "id": "4c9af5e9-6c7f-4737-af2f-bab05fbd572a",
+          "id": "10506004-180f-4d31-b29f-e011830abc4d",
           "question": "Kysymys 2 Javascript",
           "choices": [
             {
-              "id": "65250319-8c36-4fa4-9ed0-b35227397132",
+              "id": "ea5df701-c617-4593-ac8c-b520d693cad5",
               "answer": "Kysymys 2 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "4e141a83-b0d6-4c67-8808-dc9ce3ff5202",
+              "id": "a59e7953-92db-461d-bace-c7fd7d52d614",
               "answer": "Kysymys 2 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "d5aba7f9-ca06-400e-8dd7-c237faa497e5",
+              "id": "f6a4628d-377e-4204-87b9-84cc91deadc8",
               "answer": "Kysymys 2 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
@@ -59,35 +59,35 @@
           ]
         },
         {
-          "id": "8ae01353-a94a-47e9-b8c9-6843d9548cb7",
+          "id": "8d2c4605-bc6e-44c3-af89-a691e51788b4",
           "question": "Kysymys 3 Javascript",
           "choices": [
             {
-              "id": "0f8fd7c9-a757-4027-8e5f-c07e632e84e7",
+              "id": "4195a195-2f82-4605-b755-1c55a2db9d5c",
               "answer": "Kysymys 3 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "cb860165-a64a-4d34-85bd-fc5c6e89d57b",
+              "id": "58e7ca51-f612-4bb2-9461-540dc857b07d",
               "answer": "Kysymys 3 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "234378dc-824c-4728-883a-6144b86ef882",
+              "id": "ae2a95e2-02db-43ed-b5d8-1eca368776a6",
               "answer": "Kysymys 3 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "17fe0bc5-5b4c-4c39-8819-ea22ce327686",
+              "id": "d07857d9-d7b8-48f0-84ea-6baed8258184",
               "answer": "Kysymys 3 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "ac0c3e76-cf76-4383-8b9b-2c24cd78bb66",
+              "id": "b0d3d16f-602e-484d-b5c4-b4a2320053f9",
               "answer": "Kysymys 3 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -95,35 +95,35 @@
           ]
         },
         {
-          "id": "45a6348a-7912-45c6-8ea6-63e6e0ca5040",
+          "id": "d532397f-3b58-405d-ae66-42c17e7f7c32",
           "question": "Kysymys 4 Javascript",
           "choices": [
             {
-              "id": "2510ae12-032c-4ac4-beb0-a0bc0f65e543",
+              "id": "835feab6-716e-4cee-98f7-0f445882fd82",
               "answer": "Kysymys 4 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "adf52f07-0d1d-4cb2-ae86-eb2fa7d7d830",
+              "id": "1973f514-b39b-4a61-83c8-97bbd8449b2c",
               "answer": "Kysymys 4 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "d1c21830-b3dd-47de-806c-875b0d4a882b",
+              "id": "e0fc1561-1f83-4f6d-96ad-4ee685f716ef",
               "answer": "Kysymys 4 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "b46c31a9-c759-477a-9236-e280e43f6b14",
+              "id": "adf4c9d0-5de2-46cd-9a30-d3b394e74908",
               "answer": "Kysymys 4 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "a62c43c5-5992-4e3c-8bda-378fa1e4e845",
+              "id": "688a2934-218b-4c69-a86f-90579b2062c7",
               "answer": "Kysymys 4 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -133,33 +133,33 @@
       ]
     },
     {
-      "id": "b9897e98-c406-444e-8b03-6f641028c4f6",
+      "id": "5c16ec00-492b-4b2d-9fca-4b1abb6d0f44",
       "exam": "C# perusteet",
       "questions": [
         {
-          "id": "d1c43d50-760f-47b3-957b-b9e6ea7504ce",
+          "id": "a5568346-972e-4af2-9512-624c52806497",
           "question": "Kysymys 1 CSharp",
           "choices": [
             {
-              "id": "36024629-bf73-4d84-9f5f-e30a035c30ca",
+              "id": "bac41706-553e-46c4-8d3a-4cd686819df1",
               "answer": "Kysymys 1 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "a19d6185-0ff7-4d4b-b53b-c2cfb27654c1",
+              "id": "ca902688-854c-4358-8edf-35103363a345",
               "answer": "Kysymys 1 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "7fd729dd-42c9-436e-a044-ca3d436a3aed",
+              "id": "892616a7-e79f-4687-a242-3ef9ed0c3f52",
               "answer": "Kysymys 1 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "cec672b8-515d-4c08-b3a6-51efb929db81",
+              "id": "baa66fcf-2177-4bfa-99b0-a5edd2c0df97",
               "answer": "Kysymys 1 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
@@ -167,23 +167,23 @@
           ]
         },
         {
-          "id": "218914c7-2f1c-4aef-8efe-dde7ef79c8cb",
+          "id": "3f4a5426-6598-4447-b0ce-d89f1c52da8e",
           "question": "Kysymys 2 CSharp",
           "choices": [
             {
-              "id": "e7575699-e451-43d4-9854-f0b0e8072a56",
+              "id": "ca7db2e9-e915-4c39-9378-4cc483d50747",
               "answer": "Kysymys 2 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "0dfeca8b-2233-4a2d-be71-67cc8b714c35",
+              "id": "89a41696-1646-4d29-a908-8005335d0dda",
               "answer": "Kysymys 2 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "6715e6b0-9e71-42ca-ae95-c786be30a9c1",
+              "id": "8d735ce8-9a0f-4c07-86be-797f730c68a4",
               "answer": "Kysymys 2 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
@@ -191,35 +191,35 @@
           ]
         },
         {
-          "id": "b7431fed-257e-4241-9e92-a74c92afbb33",
+          "id": "fd09feb5-f514-436a-8464-3a646a35f9b8",
           "question": "Kysymys 3 CSharp",
           "choices": [
             {
-              "id": "5e0f590f-1771-49fc-88a1-2b6bcfcc9331",
+              "id": "0fa0a18d-960f-4aee-a563-043032cf3447",
               "answer": "Kysymys 3 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "693ddc3f-a601-4e97-91d2-e287cbfac562",
+              "id": "7f460989-73e3-43e5-935b-8a6c7294dd34",
               "answer": "Kysymys 3 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "46da8af9-e2c9-43e5-b516-cfd85b2ff1ff",
+              "id": "f5a06dbc-4f88-4d73-a3f7-1d8ece2956e1",
               "answer": "Kysymys 3 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "221eff8f-bfb9-4e15-8b1e-3d53fc70f01f",
+              "id": "ae65e579-a2e8-40e3-bfd0-b8479be168e8",
               "answer": "Kysymys 3 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "edd9c353-a7d4-40e7-bff7-5d39567be600",
+              "id": "3b9bd9fd-85dc-4549-8088-7b6a970a6717",
               "answer": "Kysymys 3 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -229,33 +229,33 @@
       ]
     },
     {
-      "id": "cc54862b-7d84-49cc-9cf2-9a1d64fafcc1",
+      "id": "906dc3fa-0ddb-4999-aafb-e5c15af6c057",
       "exam": "HTML&CSS perusteet",
       "questions": [
         {
-          "id": "74ce49fb-5ecd-44cf-8ebf-b329c4186cbe",
+          "id": "aeb465a6-cf3d-45c4-afc9-ae1860bcb964",
           "question": "Kysymys 1 HTML-CSS",
           "choices": [
             {
-              "id": "096d1502-012d-453d-ab47-360e0a4d8eea",
+              "id": "43d4af16-4431-46a1-8bf0-0c60743682a7",
               "answer": "Kysymys 1 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "d739bad1-dbd9-4b6d-a5b0-2b004ddeccbb",
+              "id": "98df6487-cf9b-4895-8a8f-f0bedb87251c",
               "answer": "Kysymys 1 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "4f39375c-ad62-4849-b6ea-3c9e78b3580b",
+              "id": "a8335d43-3862-4f03-b9e4-f32339307d24",
               "answer": "Kysymys 1 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "4912d682-2503-4c91-ada5-8b432f3c7dba",
+              "id": "43db68ad-2102-4599-9d90-0914491160f6",
               "answer": "Kysymys 1 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
@@ -263,23 +263,23 @@
           ]
         },
         {
-          "id": "c276cb51-fe10-4ec5-b3b8-a883802d017a",
+          "id": "4a66a2d6-584b-41df-9627-e19141302605",
           "question": "Kysymys 2 HTML-CSS",
           "choices": [
             {
-              "id": "6f38d14c-3490-449a-b4b1-ed36a686161d",
+              "id": "62b8a837-26f5-4503-b9c5-8db78873d5f8",
               "answer": "Kysymys 2 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "03bbaf21-c1ae-4b37-acf8-aa646ea5052b",
+              "id": "0c4fdd02-7011-4873-9b26-eb3af6d5fc39",
               "answer": "Kysymys 2 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "4f268c65-426b-41d8-9824-8ade0275ed59",
+              "id": "44a252e1-33e8-4a7b-a912-e14143fc148b",
               "answer": "Kysymys 2 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
@@ -287,35 +287,35 @@
           ]
         },
         {
-          "id": "9645c3ee-bdb7-43db-8b84-35746745cdff",
+          "id": "0fb2eae2-d94b-4a5e-9ee8-8907289d58cf",
           "question": "Kysymys 3 HTML-CSS",
           "choices": [
             {
-              "id": "27bfcb65-8e41-42bb-b702-139209d48261",
+              "id": "6b9c5b9b-9eb2-4655-8ae3-657b274f5214",
               "answer": "Kysymys 3 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "0fff3fc8-0feb-41cd-b0a8-9d295204df6e",
+              "id": "7cd61167-06ca-4b69-aa8d-f251fec3d016",
               "answer": "Kysymys 3 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "1221b7cd-f17b-4796-81e9-db1f6bd84c7b",
+              "id": "e2327292-c528-4382-aefa-3a9c914ddd18",
               "answer": "Kysymys 3 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "62ce0e83-4c45-4005-8d93-aa603d4502a6",
+              "id": "5f6a2c51-0903-44b5-a73b-227b97e5047a",
               "answer": "Kysymys 3 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "ae72deea-a637-43e3-9c1f-4836e0826bac",
+              "id": "0fabc9a7-7a14-4052-ba42-edd1c461681b",
               "answer": "Kysymys 3 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -323,35 +323,35 @@
           ]
         },
         {
-          "id": "7f5d4881-1002-483e-97e2-8146d1377f7e",
+          "id": "4998ed73-5677-4c0d-a292-b008f233b024",
           "question": "Kysymys 4 HTML-CSS",
           "choices": [
             {
-              "id": "40acd1b5-9eb0-447d-809f-ab170036a134",
+              "id": "d3f84a01-f1a6-43d9-b9ec-f56f08b2b914",
               "answer": "Kysymys 4 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "e2b93c55-1b2c-42a3-81d3-2cbd23e974b8",
+              "id": "d46775de-1cab-4be9-93d6-2a4363c7db8f",
               "answer": "Kysymys 4 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "6dd844d2-416b-444c-962f-cc452408889e",
+              "id": "ec91c9ab-dde1-4660-ba7b-04549513bb80",
               "answer": "Kysymys 4 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "d0daae39-ef5f-4f8f-8f76-d928fd76ef23",
+              "id": "61ff4500-263f-4e84-a5fc-158eeda26aee",
               "answer": "Kysymys 4 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "40900a1c-1b69-46ed-8688-adf0af09a552",
+              "id": "32341808-c970-4aca-832e-cfc497bf0724",
               "answer": "Kysymys 4 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -359,35 +359,35 @@
           ]
         },
         {
-          "id": "5baead82-ebe3-47c5-8dcf-72c8e116e77f",
+          "id": "50415e5a-a354-4268-afd9-7bf08de9dc08",
           "question": "Kysymys 5 HTML-CSS",
           "choices": [
             {
-              "id": "2ffef3c2-619b-477a-b94e-8096399e9801",
+              "id": "3fb41d32-b099-46c6-84a2-254aa9a854f3",
               "answer": "Kysymys 5 Vastaus nro 1",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "fb861385-c1e3-4fd6-9f31-a76a81af6a14",
+              "id": "bfa32c37-026a-4f49-a009-bdff779be81e",
               "answer": "Kysymys 5 Vastaus nro 2",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "90f708a7-5286-4c39-8e01-a5c75fd614a4",
+              "id": "8cfc78f3-abfe-4061-8b29-2a4c7c23a2cf",
               "answer": "Kysymys 5 Vastaus nro 3",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "bfe8b06f-c5d3-460e-9749-1a16ebb72a06",
+              "id": "71bb992c-ad57-4618-a619-1f17f66cb10f",
               "answer": "Kysymys 5 Vastaus nro 4",
               "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "d3c27454-ef3d-4f1f-a4a1-fdd3e787ac2a",
+              "id": "e6e12c98-a514-48e4-919d-bce697442569",
               "answer": "Kysymys 5 Vastaus nro 5",
               "isSelected": false,
               "isCorrect": true
@@ -397,82 +397,122 @@
       ]
     },
     {
-      "id": "4bbb2b3f-1efd-42fd-9d07-d21a4b708bfb",
+      "id": "1f160105-d357-4832-a44c-54145a5399f8",
       "exam": "react perusteet",
       "questions": [
         {
-          "id": "cdf26c86-4235-456c-a484-8d8293b6f831",
-          "question": "Kysymys 1",
+          "id": "fdf27bad-8951-426f-ac36-b7c6656376bf",
+          "question": "jotain",
           "choices": [
             {
-              "id": "d8a83569-193a-4910-b3a1-16affbae6e63",
-              "answer": "Vastaus 1",
-              "isSelected": true,
-              "isCorrect": true
-            },
-            {
-              "id": "0d473bea-5b65-47b2-821d-ee7caec7cf9f",
-              "answer": "Vastaus 2",
-              "isSelected": false,
-              "isCorrect": false
-            },
-            {
-              "id": "43a96ae4-e2a3-427a-a700-9a1ef86ebe9d",
-              "answer": "Vastaus 3",
-              "isSelected": false,
-              "isCorrect": true
-            }
-          ]
-        },
-        {
-          "id": "9177baef-e5ed-4f0e-a302-bdddda27f61c",
-          "question": "Kysymys 2",
-          "choices": [
-            {
-              "id": "e0ebf14c-1a27-4a92-b6c1-35a251267fc1",
-              "answer": "Vastaus 1",
-              "isSelected": false,
-              "isCorrect": false
-            },
-            {
-              "id": "db07b413-041f-4943-844e-81bc04d7c5f9",
-              "answer": "Vastaus 2",
-              "isSelected": false,
-              "isCorrect": false
-            },
-            {
-              "id": "a1d6696b-f6bf-4fdb-9344-a65234e143d8",
-              "answer": "Vastaus 3",
-              "isSelected": true,
-              "isCorrect": true
-            }
-          ]
-        },
-        {
-          "id": "70324811-54c3-4075-aa99-341d33124bbd",
-          "question": "Kysymys 3",
-          "choices": [
-            {
-              "id": "2473cd95-a0aa-4e2b-b292-b384d51e0817",
+              "id": "513daed6-1219-4366-b8e6-bc0fa5f7d6a0",
               "answer": "v1",
-              "isSelected": true,
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "f4b8f833-ceba-41b4-8188-44d30d8bafd4",
+              "answer": "v2",
+              "isSelected": false,
               "isCorrect": false
             },
             {
-              "id": "bcafda2a-9db1-4c90-ad1a-4015ee36af45",
+              "id": "c19df6de-4310-4ccf-8c9b-29c0c08dbb47",
+              "answer": "v3",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "f8f31f13-c5f8-4e67-836e-a94da8ec821c",
+          "question": "jotain 2",
+          "choices": [
+            {
+              "id": "4b27c70f-c357-4110-ab87-c1661636edb0",
+              "answer": "v1",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "0e6b4da9-32c4-4bb6-8f5d-c741c9d2d816",
               "answer": "v2",
               "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "bbda61bc-8cb1-4ff1-af3a-1d0f3ebf39b2",
+              "id": "da162451-96ce-4f94-9b7c-3cfb044da532",
               "answer": "v3",
-              "isSelected": true,
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "284929e4-9579-461d-9d26-2e0ac56b9809",
+              "answer": "lol",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "acaed7dc-8899-4ce1-9f63-95d9ed1f8066",
+          "question": "jot",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "id": "b9d7d950-6280-4a70-9e19-b2febc052393",
+      "exam": "lol",
+      "questions": [
+        {
+          "id": "c7c8559b-36d7-48fe-9f76-d93682ff4cc1",
+          "question": "tekstiä",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "id": "97f74edc-d2a9-44bb-a1d2-c3d623b7c2e6",
+      "exam": "hep",
+      "questions": [
+        {
+          "id": "8cb92da8-cb06-4cb7-8509-7f418dac0663",
+          "question": "jotain",
+          "choices": [
+            {
+              "id": "a25ca1db-19e0-44c0-8ff1-5a743f2e8081",
+              "answer": "fad",
+              "isSelected": false,
               "isCorrect": true
             },
             {
-              "id": "9a430590-bb97-4885-a92e-59a79b8b852b",
-              "answer": "v4",
+              "id": "a7214408-f9cc-42e7-b5d9-8ff15e97061e",
+              "answer": "asdad",
+              "isSelected": false,
+              "isCorrect": false
+            },
+            {
+              "id": "eb59e850-3f3f-4835-94f7-9e007d618509",
+              "answer": "adfafdsa",
+              "isSelected": false,
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "fa279594-0966-44c1-9ad5-d49a1b289ebe",
+          "question": "agdsasdfa",
+          "choices": [
+            {
+              "id": "40eec635-fb0d-4192-a7f8-b8ff533856ac",
+              "answer": "sadfasddsaf",
+              "isSelected": false,
+              "isCorrect": true
+            },
+            {
+              "id": "2c5f6546-c4e4-4793-ba84-cc3512ba0405",
+              "answer": "adfasddaf",
               "isSelected": false,
               "isCorrect": false
             }

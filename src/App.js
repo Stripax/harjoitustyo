@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { DeleteForeverOutlined } from '@material-ui/icons';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import NewExamNameDialog from './NewExamNameDialog';
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -38,8 +39,7 @@ function reducer(state, action) {
       return deepCopy
 
     case 'addExam':
-      let newExamName = prompt("Anna uuden tentin nimi", "Uusi tentti")
-      let newExam = { id: uuid(), exam: newExamName, questions: [] }
+      let newExam = { id: uuid(), exam: action.data.newExamName, questions: [] }
       deepCopy.push(newExam)
       return deepCopy
 
@@ -72,6 +72,7 @@ function App() {
   const [isDataInitialized, setIsDataInitialized] = useState(false)
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
 
   const exampleQuestions = [ {
     id: uuid(), exam: "Javascript perusteet", questions: [ {
@@ -160,7 +161,7 @@ function App() {
     const createData = async() => {
 
       try {
-        let result = await axios.post("http://localhost:3001/exams", exampleQuestions)
+        await axios.post("http://localhost:3001/exams", exampleQuestions)
         dispatch({ type: 'initializeData', data: exampleQuestions })
         setIsDataInitialized(true)
       }
@@ -197,7 +198,7 @@ function App() {
 
     const updateData = async() => {
       try {
-        let result = await axios.put("http://localhost:3001/exams", state)
+        await axios.put("http://localhost:3001/exams", state)
       }
       catch(ex) {
         alert(ex.message)
@@ -211,7 +212,6 @@ function App() {
   }, [state])
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
-
 
   const editQuestions = () => {
     if (activeExam >= 0) {
@@ -274,7 +274,7 @@ function App() {
       },
     },
     checked: {},
-  })((props) => <Checkbox color="default" {...props} />);
+  })((props) => <Checkbox color="default" {...props} />)
 
   return (
     <div className = "App">
@@ -289,7 +289,8 @@ function App() {
 
       <div className = "exam-buttons">
         { showExamButtons() }
-        { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addExam' })}></Button> }
+        { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => setIsNewExamNameDialogOpen(true)}></Button> }
+        { isNewExamNameDialogOpen && <NewExamNameDialog dispatch = {dispatch}></NewExamNameDialog> }
       </div>
 
       <div className = "main-body">
@@ -297,7 +298,7 @@ function App() {
           <Grid item xs = {12}>
             { !isAdmin && showQuestions() }
             { isAdmin && editQuestions() }
-            { isAdmin && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
+            { isAdmin && activeExam >= 0 && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
           </Grid>
         </Grid>
       </div>
@@ -306,9 +307,9 @@ function App() {
         { activeExam >= 0 && !isAdmin &&
           <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä tulokset</Button> }
       </div>
-      
+
     </div>
-  );
+  )
 }
 
 export default App;

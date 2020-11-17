@@ -5,6 +5,7 @@
         "Kysymys",
         "N",
         "Näytä",
+        "Peruuta",
         "Poistu",
         "Tentit",
         "Tietoa",
@@ -17,6 +18,7 @@
         "tentti",
         "tulokset",
         "uuden",
+        "valitse",
         "yt"
     ]
 }
