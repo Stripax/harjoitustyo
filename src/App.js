@@ -13,6 +13,7 @@ import { green } from '@material-ui/core/colors';
 import { DeleteForeverOutlined } from '@material-ui/icons';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import NewExamNameDialog from './NewExamNameDialog';
+import TestResultsDemo from './TestResultsDemo';
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -73,6 +74,7 @@ function App() {
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
+  const [isDemoShown, setIsDemoShown] = useState(false)
 
   const exampleQuestions = [ {
     id: uuid(), exam: "Javascript perusteet", questions: [ {
@@ -308,6 +310,11 @@ function App() {
           <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä tulokset</Button> }
       </div>
 
+      <div className = "demo">
+        { activeExam >= 0 && <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsDemoShown(true)}>Tulosten demo</Button> }
+        { isDemoShown && <TestResultsDemo></TestResultsDemo> }
+      </div>
+      
     </div>
   )
 }
