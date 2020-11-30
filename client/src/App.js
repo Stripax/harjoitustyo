@@ -182,7 +182,6 @@ function App() {
           setIsDataInitialized(true)
         }
         else {
-          // eslint-disable-next-line no-throw-literal
           throw("Empty dataset")
         }
       }
@@ -193,7 +192,6 @@ function App() {
     }
 
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect (() => {
@@ -210,7 +208,6 @@ function App() {
     if (isDataInitialized) {
       updateData();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
