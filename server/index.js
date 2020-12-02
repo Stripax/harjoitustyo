@@ -1,14 +1,16 @@
 const express = require('express')
+var cors = require('cors')
 const db = require('./db')
 var bodyParser = require('body-parser')
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 const port = 4000
 
 // Create
 
 app.post('/exam', (req, res, next) => {
-  db.query('INSERT INTO exam (exam_name, exam_score, exam_startdate, exam_enddate, min_points) VALUES ($1, $2, $3, $4, $5)',
+  db.query('INSERT INTO exam (exam_name, exam_score, exam_startdate, exam_enddate, min_points) VALUES ($1, $2, $3, $4, $5) RETURNING id',
       [req.body.exam_name, req.body.exam_score, req.body.exam_startdate, req.body.exam_enddate, req.body.min_points], (err) => {
     if (err) {
       return next(err)
@@ -19,8 +21,8 @@ app.post('/exam', (req, res, next) => {
 
 // Read
 
-app.get('/exam', (res, next) => {
-  db.query('SELECT * FROM exam', (err, result) => {
+app.get('/exam', (req, res, next) => {
+  db.query('SELECT exam_name FROM exam', (err, result) => {
     if (err) {
       return next(err)
     }

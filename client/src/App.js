@@ -40,8 +40,17 @@ function reducer(state, action) {
       return deepCopy
 
     case 'addExam':
-      let newExam = { id: uuid(), exam: action.data.newExamName, questions: [] }
-      deepCopy.push(newExam)
+      const addNewExam = async() => {
+
+        try {
+          let result = await axios.post("http://localhost:4000/exam", { exam_name: action.data.newExamName })
+        }
+        catch (ex) {
+          alert(ex.message)
+        }
+      }
+
+      addNewExam()
       return deepCopy
 
     case 'addQuestion':
@@ -58,7 +67,7 @@ function reducer(state, action) {
       deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices[action.data.answerIndex].isSelected = action.data.checked
       return deepCopy
 
-    case 'initializeData':
+    case 'getExamNames':
       return action.data
 
     default: 
@@ -76,7 +85,7 @@ function App() {
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
   const [isDemoShown, setIsDemoShown] = useState(false)
 
-  const exampleQuestions = [ {
+  /* const exampleQuestions = [ {
     id: uuid(), exam: "Javascript perusteet", questions: [ {
       id: uuid(), question: "Kysymys 1 Javascript", 
         choices: [ { 
@@ -156,29 +165,17 @@ function App() {
           id: uuid(), answer: "Kysymys 5 Vastaus nro 2", isSelected: false, isCorrect: false }, {
           id: uuid(), answer: "Kysymys 5 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
           id: uuid(), answer: "Kysymys 5 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] } ]
+          id: uuid(), answer: "Kysymys 5 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] } ] */
 
   useEffect (() => {
-
-    const createData = async() => {
-
-      try {
-        await axios.post("http://localhost:3001/exams", exampleQuestions)
-        dispatch({ type: 'initializeData', data: exampleQuestions })
-        setIsDataInitialized(true)
-      }
-      catch(ex) {
-        alert(ex.message)
-      }
-    }
 
     const fetchData = async() => {
 
       try {
-        let result = await axios.get("http://localhost:3001/exams")
+        let result = await axios.get("http://localhost:4000/exam")
 
         if (result.data.length > 0) {
-          dispatch({ type: 'initializeData', data: result.data })
+          dispatch({ type: 'getExamNames', data: result.data })
           setIsDataInitialized(true)
         }
         else {
@@ -186,7 +183,6 @@ function App() {
         }
       }
       catch (ex) {
-        createData()
         alert(ex.message)
       }
     }
@@ -194,7 +190,7 @@ function App() {
     fetchData()
   }, [])
 
-  useEffect (() => {
+  /* useEffect (() => {
 
     const updateData = async() => {
       try {
@@ -208,7 +204,7 @@ function App() {
     if (isDataInitialized) {
       updateData();
     }
-  }, [state])
+  }, [state]) */
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
 
@@ -236,7 +232,7 @@ function App() {
 
   const showExamButtons = () => {
     return state.map((item, examIndex) => 
-      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam }</Button>)
+      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam_name }</Button>)
   }
 
   const showQuestions = () => {
