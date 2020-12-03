@@ -11,31 +11,31 @@ const port = 4000
 
 app.post('/exam', (req, res, next) => {
   db.query('INSERT INTO exam (exam_name, exam_score, exam_startdate, exam_enddate, min_points) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [req.body.exam_name, req.body.exam_score, req.body.exam_startdate, req.body.exam_enddate, req.body.min_points], (err) => {
+      [req.body.exam_name, req.body.exam_score, req.body.exam_startdate, req.body.exam_enddate, req.body.min_points], (err, result) => {
     if (err) {
       return next(err)
     }
-    res.send("Tentin lisäys onnistui!")
+    res.send(result.rows[0].id.toString())
   })
 })
 
 // Read
 
-app.get('/exam', (req, res, next) => {
-  db.query('SELECT exam_name FROM exam', (err, result) => {
+app.get('/exams', (req, res, next) => {
+  db.query('SELECT * FROM exam', (err, result) => {
     if (err) {
       return next(err)
     }
     res.send(result.rows)
   })
 })
-
-app.get('/exam/:id', (req, res, next) => {
-  db.query('SELECT * FROM exam WHERE id = $1', [req.params.id], (err, result) => {
+ 
+app.get('/questions/:exam_id', (req, res, next) => {
+  db.query('SELECT * FROM question WHERE exam_id = $1', [req.params.exam_id], (err, result) => {
     if (err) {
       return next(err)
     }
-    res.send(result.rows[0])
+    res.send(result.rows)
   })
 })
 

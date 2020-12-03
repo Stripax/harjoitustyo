@@ -40,6 +40,7 @@ function reducer(state, action) {
       return deepCopy
 
     case 'addExam':
+
       const addNewExam = async() => {
 
         try {
@@ -85,101 +86,16 @@ function App() {
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
   const [isDemoShown, setIsDemoShown] = useState(false)
 
-  /* const exampleQuestions = [ {
-    id: uuid(), exam: "Javascript perusteet", questions: [ {
-      id: uuid(), question: "Kysymys 1 Javascript", 
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-      id: uuid(), question: "Kysymys 2 Javascript",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-      id: uuid(), question: "Kysymys 3 Javascript",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-      id: uuid(), question: "Kysymys 4 Javascript",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
-
-    id: uuid(), exam: "C# perusteet", questions: [ {
-      id: uuid(), question: "Kysymys 1 CSharp", 
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-      id: uuid(), question: "Kysymys 2 CSharp",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-      id: uuid(), question: "Kysymys 3 CSharp",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] }, {
-
-    id: uuid(), exam: "HTML&CSS perusteet", questions: [ {
-      id: uuid(), question: "Kysymys 1 HTML-CSS", 
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 2", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 1 Vastaus nro 4", isSelected: false, isCorrect: false } ] }, {
-    id: uuid(), question: "Kysymys 2 HTML-CSS",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 2", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 2 Vastaus nro 3", isSelected: false, isCorrect: true } ] }, {
-    id: uuid(), question: "Kysymys 3 HTML-CSS",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 3", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 3 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-    id: uuid(), question: "Kysymys 4 HTML-CSS",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 1", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 4", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 4 Vastaus nro 5", isSelected: false, isCorrect: true } ] }, {
-    id: uuid(), question: "Kysymys 5 HTML-CSS",
-        choices: [ { 
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 1", isSelected: false, isCorrect: true }, { 
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 2", isSelected: false, isCorrect: false }, {
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 3", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 4", isSelected: false, isCorrect: false }, { 
-          id: uuid(), answer: "Kysymys 5 Vastaus nro 5", isSelected: false, isCorrect: true } ] } ] } ] */
-
   useEffect (() => {
 
     const fetchData = async() => {
 
       try {
-        let result = await axios.get("http://localhost:4000/exam")
+        let resultExams = await axios.get("http://localhost:4000/exams")
 
-        if (result.data.length > 0) {
-          dispatch({ type: 'getExamNames', data: result.data })
+        if (resultExams.data.length > 0) {
+          dispatch({ type: 'getExamNames', data: resultExams.data })
           setIsDataInitialized(true)
-        }
-        else {
-          throw("Empty dataset")
         }
       }
       catch (ex) {
@@ -192,23 +108,14 @@ function App() {
 
   /* useEffect (() => {
 
-    const updateData = async() => {
-      try {
-        await axios.put("http://localhost:3001/exams", state)
-      }
-      catch(ex) {
-        alert(ex.message)
-      }
-    }
-
     if (isDataInitialized) {
-      updateData();
+      showExamButtons()
     }
   }, [state]) */
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
 
-  const editQuestions = () => {
+ /*  const editQuestions = () => {
     if (activeExam >= 0) {
       return state[activeExam].questions.map((item, questionIndex) =>
         <Paper key = {item.id} className = "edit-questions">
@@ -226,26 +133,44 @@ function App() {
           <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addAnswer', data: { activeExam: activeExam, questionIndex: questionIndex }})}></Button>
         </Paper>)
     }
-  }
+  } */
 
   // ------------------- USER PART OF THE CODE ---------------------------
 
   const showExamButtons = () => {
-    return state.map((item, examIndex) => 
-      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(examIndex)}>{ item.exam_name }</Button>)
+
+    return state.map((item) => 
+      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(Number(item.id))}>{ item.exam_name }</Button>)
   }
 
-  const showQuestions = () => {
+
+  // EI TOIMI!!!!!!!
+  
+  const showQuestions = async() => {
+
     if (activeExam >= 0) {
-      return state[activeExam].questions.map((item, questionIndex) =>
-      <Paper key = {item.id} className = "question">
-        <h2 className = "question-header">{ item.question }</h2>
-        { showChoices(item.choices, questionIndex) }
-      </Paper>)
+      let fetchedQuestions
+
+      try {
+        let result = await axios.get("http://localhost:4000/questions/" + activeExam)
+
+        if (result.data.length > 0) {
+          fetchedQuestions = result.data
+        }
+      }
+      catch (ex) {
+        alert(ex.message)
+      }
+
+      return fetchedQuestions.map((item) =>
+        <Paper key = {item.id} className = "question">
+          <h2 className = "question-header">{ item.question_text }</h2>
+          {/* { showChoices(item.choices, questionIndex) } */}
+        </Paper>)
     }
   }
 
-  const showChoices = (choices, questionIndex) => {
+  /* const showChoices = (choices, questionIndex) => {
     if (activeExam >= 0) {
       return choices.map((item, answerIndex) => 
       <div key = {item.id}>
@@ -259,9 +184,9 @@ function App() {
           label = {item.answer} />
       </div>)
     }
-  }
+  } */
 
-  const GreenCheckbox = withStyles({
+  /* const GreenCheckbox = withStyles({
     root: {
       color: green[400],
       '&$checked': {
@@ -269,7 +194,7 @@ function App() {
       },
     },
     checked: {},
-  })((props) => <Checkbox color="default" {...props} />)
+  })((props) => <Checkbox color="default" {...props} />) */
 
   return (
     <div className = "App">
@@ -291,8 +216,8 @@ function App() {
       <div className = "main-body">
         <Grid container direction = "column" justify = "center" alignItems = "stretch">
           <Grid item xs = {12}>
-            { !isAdmin && showQuestions() }
-            { isAdmin && editQuestions() }
+            { !isAdmin && activeExam >= 0 && showQuestions() }
+            {/* { isAdmin && editQuestions() } */}
             { isAdmin && activeExam >= 0 && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
           </Grid>
         </Grid>
