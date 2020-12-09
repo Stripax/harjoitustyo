@@ -17,6 +17,7 @@ import TestResultsDemo from './TestResultsDemo';
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
+  let examId = deepCopy.findIndex(exam => exam.id == action.activeExam)
 
   switch(action.type) {
     case 'changeQuestion':
@@ -40,11 +41,13 @@ function reducer(state, action) {
       return deepCopy
 
     case 'addExam':
+      let newExam = { id: null, exam_name: action.data.newExamName, exam_score: null, exam_startdate: null, exam_enddate: null, min_points: null, grade_limits: null }
 
       const addNewExam = async() => {
 
         try {
           let result = await axios.post("http://localhost:4000/exam", { exam_name: action.data.newExamName })
+          newExam.id = result.request.response
         }
         catch (ex) {
           alert(ex.message)
@@ -52,6 +55,7 @@ function reducer(state, action) {
       }
 
       addNewExam()
+      deepCopy.push(newExam)
       return deepCopy
 
     case 'addQuestion':
@@ -65,9 +69,35 @@ function reducer(state, action) {
       return deepCopy
 
     case 'checkBoxClicked':
-      deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices[action.data.answerIndex].isSelected = action.data.checked
+      
+      
+
+      deepCopy[examId].questions[action.data.questionIndex].choices[action.data.answerIndex].is_selected = action.data.checked
       return deepCopy
 
+    case 'getQuestions':
+      let examQuestions = []
+
+      action.data.forEach(question => {
+        examQuestions.push(question)
+      })
+
+      deepCopy[examId]["questions"] = examQuestions      
+      return deepCopy
+
+      case 'getQuestionChoices':
+      let questionChoices = []
+
+      action.data.forEach(choice => {
+        questionChoices.push(choice)
+      })
+
+      for (var i = 0; i < deepCopy[examId].questions.length; i++) {
+        deepCopy[examId].questions[i]["choices"] = questionChoices.filter(choice => choice.question_id == deepCopy[examId].questions[i].id)
+      }
+
+      return deepCopy
+    
     case 'getExamNames':
       return action.data
 
@@ -81,6 +111,8 @@ function App() {
   const [state, dispatch] = useReducer(reducer, [])
   const [activeExam, setActiveExam] = useState(-1)
   const [isDataInitialized, setIsDataInitialized] = useState(false)
+  const [isQuestionsInitialized, setIsQuestionsInitialized] = useState(false)
+  const [isQuestionChoicesInitialized, setIsQuestionChoicesInitialized] = useState(false)
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
@@ -106,12 +138,33 @@ function App() {
     fetchData()
   }, [])
 
-  /* useEffect (() => {
+  useEffect (() => {
+    if (activeExam >= 0) {
 
-    if (isDataInitialized) {
-      showExamButtons()
+      const fetchData = async() => {
+
+        try {
+          let resultQuestions = await axios.get("http://localhost:4000/questions/" + activeExam)
+          let resultChoices = await axios.get("http://localhost:4000/answers/" + activeExam)
+
+          if (resultQuestions.data.length > 0) {
+            dispatch({ type: 'getQuestions', data: resultQuestions.data, activeExam: activeExam })
+            setIsQuestionsInitialized(true)
+          }
+
+          if (resultChoices.data.length > 0) {
+            dispatch({ type: 'getQuestionChoices', data: resultChoices.data, activeExam: activeExam })
+            setIsQuestionChoicesInitialized(true)
+          }
+        }
+        catch (ex) {
+          alert(ex.message)
+        }
+      }
+
+      fetchData()
     }
-  }, [state]) */
+  }, [activeExam])
 
   // ------------------ ADMIN PART OF THE CODE ----------------------------
 
@@ -139,41 +192,32 @@ function App() {
 
   const showExamButtons = () => {
 
-    return state.map((item) => 
-      <Button key = {uuid()} color = "primary" onClick = {() => setActiveExam(Number(item.id))}>{ item.exam_name }</Button>)
-  }
-
-
-  // EI TOIMI!!!!!!!
-  
-  const showQuestions = async() => {
-
-    if (activeExam >= 0) {
-      let fetchedQuestions
-
-      try {
-        let result = await axios.get("http://localhost:4000/questions/" + activeExam)
-
-        if (result.data.length > 0) {
-          fetchedQuestions = result.data
-        }
-      }
-      catch (ex) {
-        alert(ex.message)
-      }
-
-      return fetchedQuestions.map((item) =>
-        <Paper key = {item.id} className = "question">
-          <h2 className = "question-header">{ item.question_text }</h2>
-          {/* { showChoices(item.choices, questionIndex) } */}
-        </Paper>)
+    if (isDataInitialized) {
+      return state.map((item) => 
+      <Button key = {uuid()} color = "primary" onClick = {() => {setActiveExam(Number(item.id)); setIsQuestionsInitialized(false); setIsQuestionChoicesInitialized(false)}}>{ item.exam_name }</Button>)
     }
   }
+  
+  const showQuestions = () => {
+    let examId = state.findIndex(exam => exam.id == activeExam)
 
-  /* const showChoices = (choices, questionIndex) => {
-    if (activeExam >= 0) {
-      return choices.map((item, answerIndex) => 
-      <div key = {item.id}>
+    if (isQuestionsInitialized && isQuestionChoicesInitialized && activeExam >= 0) {
+      return state[examId].questions.map((item, questionIndex) =>
+      <Paper key = {item.id} className = "question">
+        <h2 className = "question-header">{ item.question_text }</h2>
+        { item.choices.map((i, answerIndex) => 
+          <div key = {i.id}>
+            <FormControlLabel
+              control = {<div>
+              { isShowCorrectAnswers === false ? 
+              <Checkbox checked = {i.is_selected} onClick = {(event) => dispatch({ type: 'checkBoxClicked', data: { checked: event.target.checked, questionId: item.id, questionIndex: questionIndex, answerId: i.id, answerIndex: answerIndex }, activeExam: activeExam})} /> : 
+              <Checkbox color = "primary" checked = {i.is_selected} disabled /> }
+              { isShowCorrectAnswers && <GreenCheckbox checked = {i.is_correct} disabled /> }
+                      </div>}
+            label = {i.answer_text} />
+          </div>
+        )}
+        {/* <div key = {item.id}>
         <FormControlLabel
           control = {<div>
             { isShowCorrectAnswers === false ? 
@@ -182,11 +226,13 @@ function App() {
             { isShowCorrectAnswers === false ? "" : <GreenCheckbox checked = {choices[answerIndex].isCorrect} disabled /> }
                     </div>}
           label = {item.answer} />
-      </div>)
+      </div> */}
+        {/* { item.choices.map((i) => <div>{i.answer_text}</div>) } */}
+      </Paper>)
     }
-  } */
+  }
 
-  /* const GreenCheckbox = withStyles({
+  const GreenCheckbox = withStyles({
     root: {
       color: green[400],
       '&$checked': {
@@ -194,7 +240,7 @@ function App() {
       },
     },
     checked: {},
-  })((props) => <Checkbox color="default" {...props} />) */
+  })((props) => <Checkbox color="default" {...props} />)
 
   return (
     <div className = "App">
@@ -208,7 +254,7 @@ function App() {
       </div>
 
       <div className = "exam-buttons">
-        { showExamButtons() }
+        { isDataInitialized && showExamButtons() }
         { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => setIsNewExamNameDialogOpen(true)}></Button> }
         { isNewExamNameDialogOpen && <NewExamNameDialog dispatch = {dispatch}></NewExamNameDialog> }
       </div>
@@ -216,22 +262,24 @@ function App() {
       <div className = "main-body">
         <Grid container direction = "column" justify = "center" alignItems = "stretch">
           <Grid item xs = {12}>
-            { !isAdmin && activeExam >= 0 && showQuestions() }
+            { !isAdmin && isQuestionsInitialized && showQuestions() }
             {/* { isAdmin && editQuestions() } */}
             { isAdmin && activeExam >= 0 && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
           </Grid>
         </Grid>
       </div>
 
-      <div className = "answers-button">
-        { activeExam >= 0 && !isAdmin &&
-          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä tulokset</Button> }
+      <div className = "answer-buttons">
+        { activeExam >= 0 && !isAdmin && isQuestionsInitialized &&
+          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä vastaukset</Button> }
+        { activeExam >= 0 && !isAdmin && isQuestionsInitialized &&
+          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(false)}>Piilota vastaukset</Button> }
       </div>
 
-      <div className = "demo">
+      {/* <div className = "demo">
         { activeExam >= 0 && <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsDemoShown(true)}>Tulosten demo</Button> }
         { isDemoShown && <TestResultsDemo></TestResultsDemo> }
-      </div>
+      </div> */}
       
     </div>
   )

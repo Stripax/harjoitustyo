@@ -3,9 +3,14 @@ var cors = require('cors')
 const db = require('./db')
 var bodyParser = require('body-parser')
 const app = express()
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 const port = 4000
+
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 // Create
 
@@ -39,10 +44,19 @@ app.get('/questions/:exam_id', (req, res, next) => {
   })
 })
 
+app.get('/answers/:exam_id', (req, res, next) => {
+  db.query('SELECT * FROM answer WHERE question_id IN (SELECT id FROM question WHERE exam_id = $1)', [req.params.exam_id], (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
+
 // Update
 
-app.put('/exam/:id', (req, res, next) => {
-  db.query('UPDATE exam SET exam_name = $1 WHERE id = $2', [req.body.exam_name, req.params.id], (err) => {
+app.put('/answer/:answer_id/checkbox/:checked', (req, res, next) => {
+  db.query('UPDATE answer SET is_selected = $2 WHERE id = $1', [req.params.answer_id, req.params.checked], (err) => {
     if (err) {
       return next(err)
     }
