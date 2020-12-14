@@ -14,6 +14,8 @@ import { DeleteForeverOutlined } from '@material-ui/icons';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import NewExamNameDialog from './NewExamNameDialog';
 import TestResultsDemo from './TestResultsDemo';
+import RegisterDialog from './RegisterDialog';
+import LoginDialog from './LoginDialog';
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -40,13 +42,29 @@ function reducer(state, action) {
       deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices.splice(action.data.answerIndex, 1)
       return deepCopy
 
+    case 'addUser':
+      let newUser = { user_firstname: action.data.firstName, user_surname: action.data.surname, user_email: action.data.email, user_password: action.data.password }
+
+      const addNewUser = async() => {
+        try {
+          let result = await axios.post("http://localhost:4000/adduser", { user_firstname: action.data.firstName, user_surname: action.data.surname, user_email: action.data.email, user_password: action.data.password })
+          newUser["id"] = result.request.response
+        }
+        catch (ex) {
+          alert(ex.message)
+        }
+      }
+
+      addNewUser()
+      return deepCopy
+
     case 'addExam':
-      let newExam = { id: null, exam_name: action.data.newExamName, exam_score: null, exam_startdate: null, exam_enddate: null, min_points: null, grade_limits: null }
+      let newExam = { id: null, exam_name: action.newExamName, exam_score: null, exam_startdate: null, exam_enddate: null, min_points: null, grade_limits: null }
 
       const addNewExam = async() => {
 
         try {
-          let result = await axios.post("http://localhost:4000/exam", { exam_name: action.data.newExamName })
+          let result = await axios.post("http://localhost:4000/exam", { exam_name: action.newExamName })
           newExam.id = result.request.response
         }
         catch (ex) {
@@ -70,8 +88,17 @@ function reducer(state, action) {
 
     case 'checkBoxClicked':
       
-      
+      const checkBoxClicked = async() => {
 
+        try {
+          let result = await axios.put("http://localhost:4000/checkbox", { answer_id: action.data.answerId, checked: action.data.checked })
+        }
+        catch (ex) {
+          alert(ex.message)
+        }
+      }
+
+      checkBoxClicked()
       deepCopy[examId].questions[action.data.questionIndex].choices[action.data.answerIndex].is_selected = action.data.checked
       return deepCopy
 
@@ -116,6 +143,8 @@ function App() {
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false)
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
   const [isDemoShown, setIsDemoShown] = useState(false)
 
   useEffect (() => {
@@ -163,6 +192,7 @@ function App() {
       }
 
       fetchData()
+      setIsShowCorrectAnswers(false)
     }
   }, [activeExam])
 
@@ -217,17 +247,6 @@ function App() {
             label = {i.answer_text} />
           </div>
         )}
-        {/* <div key = {item.id}>
-        <FormControlLabel
-          control = {<div>
-            { isShowCorrectAnswers === false ? 
-              <Checkbox checked = {choices[answerIndex].isSelected} onClick = {(event) => dispatch({ type: 'checkBoxClicked', data: { checked: event.target.checked, activeExam: activeExam, questionIndex: questionIndex, answerIndex: answerIndex }})} /> : 
-              <Checkbox color = "primary" checked = {choices[answerIndex].isSelected} disabled /> }
-            { isShowCorrectAnswers === false ? "" : <GreenCheckbox checked = {choices[answerIndex].isCorrect} disabled /> }
-                    </div>}
-          label = {item.answer} />
-      </div> */}
-        {/* { item.choices.map((i) => <div>{i.answer_text}</div>) } */}
       </Paper>)
     }
   }
@@ -248,15 +267,21 @@ function App() {
         <div className = "header-buttons">
           <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>Tentit</Button>
           <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>Tietoa sovelluksesta</Button>
-          <Button key = {uuid()} color = "inherit" onClick = {() => setIsAdmin(true)}>Admin</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>Rekisteröidy</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>Kirjaudu</Button>          
           <Button key = {uuid()} color = "inherit" onClick = {() => setIsAdmin(false)}>Poistu</Button>
         </div>
+      </div>
+
+      <div className = "login-register-dialog">
+        { isRegisterDialogOpen && <RegisterDialog key = {uuid()} dialogClosed = {() => setIsRegisterDialogOpen(false)} dispatch = {(fname, sname, email, password) => dispatch({ type: 'addUser', data: { firstName: fname, surname: sname, email: email, password: password }})}></RegisterDialog> }
+        { isLoginDialogOpen && <LoginDialog key = {uuid()} dialogClosed = {() => setIsLoginDialogOpen(false)}></LoginDialog> }
       </div>
 
       <div className = "exam-buttons">
         { isDataInitialized && showExamButtons() }
         { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => setIsNewExamNameDialogOpen(true)}></Button> }
-        { isNewExamNameDialogOpen && <NewExamNameDialog dispatch = {dispatch}></NewExamNameDialog> }
+        { isNewExamNameDialogOpen && <NewExamNameDialog key = {uuid()} dialogClosed = {() => setIsNewExamNameDialogOpen(false)} dispatch = {(examName) => dispatch({ type: 'addExam', newExamName: examName })}></NewExamNameDialog> }
       </div>
 
       <div className = "main-body">
@@ -264,16 +289,14 @@ function App() {
           <Grid item xs = {12}>
             { !isAdmin && isQuestionsInitialized && showQuestions() }
             {/* { isAdmin && editQuestions() } */}
-            { isAdmin && activeExam >= 0 && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', data: { activeExam: activeExam } })}></Button> }
+            { isAdmin && activeExam >= 0 && <Button key = {uuid()} startIcon = {<AddCircleOutlineIcon />} onClick = {() => dispatch({ type: 'addQuestion', activeExam: activeExam })}></Button> }
           </Grid>
         </Grid>
       </div>
 
       <div className = "answer-buttons">
         { activeExam >= 0 && !isAdmin && isQuestionsInitialized &&
-          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(true)}>Näytä vastaukset</Button> }
-        { activeExam >= 0 && !isAdmin && isQuestionsInitialized &&
-          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(false)}>Piilota vastaukset</Button> }
+          <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsShowCorrectAnswers(!isShowCorrectAnswers)}>Näytä vastaukset</Button> }
       </div>
 
       {/* <div className = "demo">

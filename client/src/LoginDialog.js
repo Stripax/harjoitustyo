@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const NewExamNameDialog = (props) => {
+const LoginDialog = (props) => {
 
   const [isOpen, setIsOpen] = useState(true)
   const [newName, setNewName] = useState("")
@@ -48,4 +48,4 @@ const NewExamNameDialog = (props) => {
   )
 }
 
-export default NewExamNameDialog
+export default LoginDialog

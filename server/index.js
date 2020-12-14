@@ -24,6 +24,16 @@ app.post('/exam', (req, res, next) => {
   })
 })
 
+app.post('/adduser', (req, res, next) => {
+  db.query('INSERT INTO "user" (user_firstname, user_surname, user_email, user_password) VALUES ($1, $2, $3, $4) RETURNING id',
+      [req.body.user_firstname, req.body.user_surname, req.body.user_email, req.body.user_password], (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows[0].id.toString())
+  })
+})
+
 // Read
 
 app.get('/exams', (req, res, next) => {
@@ -55,8 +65,8 @@ app.get('/answers/:exam_id', (req, res, next) => {
 
 // Update
 
-app.put('/answer/:answer_id/checkbox/:checked', (req, res, next) => {
-  db.query('UPDATE answer SET is_selected = $2 WHERE id = $1', [req.params.answer_id, req.params.checked], (err) => {
+app.put('/checkbox', (req, res, next) => {
+  db.query('UPDATE answer SET is_selected = $2 WHERE id = $1', [req.body.answer_id, req.body.checked], (err) => {
     if (err) {
       return next(err)
     }
