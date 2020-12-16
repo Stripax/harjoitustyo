@@ -2,6 +2,7 @@ const express = require('express')
 var cors = require('cors')
 const db = require('./db')
 var bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const app = express()
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
@@ -23,18 +24,58 @@ app.post('/exam', (req, res, next) => {
     res.send(result.rows[0].id.toString())
   })
 })
-
+ 
 app.post('/adduser', (req, res, next) => {
-  db.query('INSERT INTO "user" (user_firstname, user_surname, user_email, user_password) VALUES ($1, $2, $3, $4) RETURNING id',
-      [req.body.user_firstname, req.body.user_surname, req.body.user_email, req.body.user_password], (err, result) => {
-    if (err) {
-      return next(err)
-    }
-    res.send(result.rows[0].id.toString())
-  })
+
+  try {
+    bcrypt.hash(req.body.password, 12, (error, hash) => {
+      db.query('INSERT INTO "user" (firstname, surname, email, password, is_admin) VALUES ($1, $2, $3, $4, false) RETURNING id',
+        [req.body.firstName, req.body.surname, req.body.email, hash], (err, result) => {
+
+          if (result !== undefined) {
+            res.json({message: "Rekisteröityminen onnistui", severity: "success"})
+          }
+          else if (err) {
+            res.send("Käyttäjä on jo rekisteröitynyt")
+            // return next(err)
+          }
+          else {
+            res.send("Rekisteröitymisessä tapahtui tunnistamaton virhe")
+            return next(err)
+          }          
+        })
+    })
+  }
+  catch (ex) {
+    res.status(ex.status).send("Rekisteröitymisessä tapahtui tunnistamaton virhe")
+  }
 })
 
 // Read
+
+app.post('/login/', (req, res, next) => {
+  db.query('SELECT password FROM "user" WHERE email = $1', [req.body.email], (err, result) => {
+
+    try {
+      bcrypt.compare(req.body.password, result.rows[0].password, (error, isLoginSuccessful) => {
+        
+        if (isLoginSuccessful) {
+          console.log("Login successful")
+          res.send(result.rows[0])
+        }
+        else {
+          console.log("Login failed")
+        }
+      })
+    } catch (ex) {
+      console.log(ex.message)
+    }
+    
+    if (err) {
+      return next(err)
+    }
+  })
+})
 
 app.get('/exams', (req, res, next) => {
   db.query('SELECT * FROM exam', (err, result) => {

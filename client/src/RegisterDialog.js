@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,38 +13,37 @@ const RegisterDialog = (props) => {
 
   const [isOpen, setIsOpen] = useState(true)
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false)
-  const [firstName, setFirstName] = useState(null)
-  const [surname, setSurname] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [passwordCheck, setPasswordCheck] = useState(null)
+  const [newUser, setNewUser] = useState({
+    firstName: null,
+    surname: null,
+    email: null,
+    password: null,
+    passwordCheck: null
+  })
 
-  const firstNameChanged = (fname) => {
-    setFirstName(fname)
-  }
-
-  const surnameChanged = (sname) => {
-    setSurname(sname)
-  }
-
-  const emailChanged = (email) => {
-    setEmail(email)
-  }
-
-  const passwordChanged = (password) => {
-    setPassword(password)
-  }
-
-  const passwordCheckupChanged = (secondPassword) => {
-    setPasswordCheck(secondPassword)
+  const onChange = (e) => {
+    setNewUser({ ...newUser, [e.target.id]: e.target.value })
   }
 
   const checkPassword = (passwordToBeChecked) => {
-    if (password == passwordToBeChecked || passwordCheck == passwordToBeChecked) {
+    if (newUser.password == passwordToBeChecked || newUser.passwordCheck == passwordToBeChecked) {
         setIsPasswordCorrect(true)
     }
     else {
         setIsPasswordCorrect(false)
+    }
+  }
+
+  const addNewUser = async() => {
+
+    try {
+      let result = await axios.post("http://localhost:4000/adduser", { firstName: newUser.firstName, surname: newUser.surname, email: newUser.email, password: newUser.password })
+    
+      if (result.status == 200) {
+        props.alertFeedback(result.data.message, result.data.severity)
+      }
+    } catch (error) {
+      props.alertFeedback(error.message, "error")
     }
   }
 
@@ -58,22 +58,22 @@ const RegisterDialog = (props) => {
           <TextField
             autoComplete = "off"
             margin = "dense"
-            id = "etunimi"
+            id = "firstName"
             label = "Etunimi"
             type = "text"
             variant = "outlined"
             fullWidth = "true"
-            onChange = {(event) => firstNameChanged(event.target.value)}
+            onChange = {(e) => onChange(e)}
           />
           <TextField
             autoComplete = "off"
             margin = "dense"
-            id = "sukunimi"
+            id = "surname"
             label = "Sukunimi"
             type = "text"
             variant = "outlined"
             fullWidth = "true"
-            onChange = {(event) => surnameChanged(event.target.value)}
+            onChange = {(e) => onChange(e)}
           />
           <TextField
             autoComplete = "off"
@@ -84,7 +84,7 @@ const RegisterDialog = (props) => {
             type = "text"
             variant = "outlined"
             fullWidth = "true"
-            onChange = {(event) => emailChanged(event.target.value)}
+            onChange = {(e) => onChange(e)}
           />
           <TextField
             autoComplete = "off"
@@ -95,27 +95,27 @@ const RegisterDialog = (props) => {
             type = "password"
             variant = "outlined"
             fullWidth = "true"
-            onChange = {(event) => {passwordChanged(event.target.value); checkPassword(event.target.value)}}
+            onChange = {(e) => {onChange(e); checkPassword(e.target.value)}}
           />
           <TextField
             autoComplete = "off"
             required
             error = {!isPasswordCorrect}
             margin = "dense"
-            id = "passwordCheckup"
+            id = "passwordCheck"
             label = "Anna salasanasi uudestaan"
             type = "password"
             variant = "outlined"
             fullWidth = "true"
-            onChange = {(event) => {passwordCheckupChanged(event.target.value); checkPassword(event.target.value)}}
+            onChange = {(e) => {onChange(e); checkPassword(e.target.value)}}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick = {() => {setIsOpen(false); props.dialogClosed()}} color = "primary">
             Peruuta
           </Button>
-          <Button onClick = {() => {setIsOpen(false); props.dispatch(firstName, surname, email, password); props.dialogClosed()}} color = "primary" disabled = {!isPasswordCorrect}>
-            OK
+          <Button onClick = {() => {setIsOpen(false); addNewUser(); props.dialogClosed()}} color = "primary" disabled = {!isPasswordCorrect}>
+            Rekisteröidy
           </Button>
         </DialogActions>
       </Dialog>

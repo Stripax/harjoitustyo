@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,36 +12,60 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const LoginDialog = (props) => {
 
   const [isOpen, setIsOpen] = useState(true)
-  const [newName, setNewName] = useState("")
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: ""
+  })
 
-  const newExamNameChanged = (newName) => {
-    setNewName(newName)
+  const onChange = (e) => {
+    setLoginData({ ...loginData, [e.target.id]: e.target.value })
+  }
+
+  const login = async() => {
+
+    try {
+      let result = await axios.post("http://localhost:4000/login/", { email: loginData.email, password: loginData.password })
+    } catch (ex) {
+      console.log(ex.message)
+    }
   }
 
   return (
     <div>
       <Dialog open = {isOpen} onClose = {() => {setIsOpen(false); props.dialogClosed()}} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Uuden tentin nimi</DialogTitle>
+        <DialogTitle id="form-dialog-title">Sisäänkirjautuminen</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Anna uuden tentin nimi ja valitse sitten OK
+            Syötä sähköpostiosoitteesi sekä salasanasi
           </DialogContentText>
           <TextField
             autoFocus
+            required
+            autoComplete = "off"
             margin="dense"
-            id="newExamNameTextField"
-            label="Tentin Nimi"
+            id="email"
+            label="Sähköpostiosoite"
             type="text"
             fullWidth
-            onChange = {(event) => newExamNameChanged(event.target.value)}
+            onChange = {(e) => onChange(e)}
+          />
+          <TextField
+            required
+            autoComplete = "off"
+            margin="dense"
+            id="password"
+            label="Salasana"
+            type="password"
+            fullWidth
+            onChange = {(e) => onChange(e)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => {setIsOpen(false); props.dialogClosed()}} color="primary">
             Peruuta
           </Button>
-          <Button onClick={() => {setIsOpen(false); props.dispatch(newName); props.dialogClosed()}} color="primary">
-            OK
+          <Button onClick={() => {setIsOpen(false); login(); props.dialogClosed()}} disabled = {loginData.email.length < 1 || loginData.password.length < 1} color="primary">
+            Kirjaudu
           </Button>
         </DialogActions>
       </Dialog>

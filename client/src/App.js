@@ -16,6 +16,7 @@ import NewExamNameDialog from './NewExamNameDialog';
 import TestResultsDemo from './TestResultsDemo';
 import RegisterDialog from './RegisterDialog';
 import LoginDialog from './LoginDialog';
+import AlertPopup from './AlertPopup';
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -40,22 +41,6 @@ function reducer(state, action) {
 
     case 'deleteAnswer':
       deepCopy[action.data.activeExam].questions[action.data.questionIndex].choices.splice(action.data.answerIndex, 1)
-      return deepCopy
-
-    case 'addUser':
-      let newUser = { user_firstname: action.data.firstName, user_surname: action.data.surname, user_email: action.data.email, user_password: action.data.password }
-
-      const addNewUser = async() => {
-        try {
-          let result = await axios.post("http://localhost:4000/adduser", { user_firstname: action.data.firstName, user_surname: action.data.surname, user_email: action.data.email, user_password: action.data.password })
-          newUser["id"] = result.request.response
-        }
-        catch (ex) {
-          alert(ex.message)
-        }
-      }
-
-      addNewUser()
       return deepCopy
 
     case 'addExam':
@@ -137,14 +122,17 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, [])
   const [activeExam, setActiveExam] = useState(-1)
+  const [alertMessage, setAlertMessage] = useState({ message: "", severity: ""})
   const [isDataInitialized, setIsDataInitialized] = useState(false)
   const [isQuestionsInitialized, setIsQuestionsInitialized] = useState(false)
   const [isQuestionChoicesInitialized, setIsQuestionChoicesInitialized] = useState(false)
   const [isShowCorrectAnswers, setIsShowCorrectAnswers] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isNewExamNameDialogOpen, setIsNewExamNameDialogOpen] = useState(false)
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false)
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [isDemoShown, setIsDemoShown] = useState(false)
 
   useEffect (() => {
@@ -160,7 +148,8 @@ function App() {
         }
       }
       catch (ex) {
-        alert(ex.message)
+        setAlertMessage({message: ex.message, severity: "error"})
+        setIsAlertOpen(true)
       }
     }
 
@@ -273,9 +262,10 @@ function App() {
         </div>
       </div>
 
-      <div className = "login-register-dialog">
-        { isRegisterDialogOpen && <RegisterDialog key = {uuid()} dialogClosed = {() => setIsRegisterDialogOpen(false)} dispatch = {(fname, sname, email, password) => dispatch({ type: 'addUser', data: { firstName: fname, surname: sname, email: email, password: password }})}></RegisterDialog> }
+      <div className = "login-register-dialogs">
+        { isRegisterDialogOpen && <RegisterDialog key = {uuid()} dialogClosed = {() => setIsRegisterDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}}></RegisterDialog> }
         { isLoginDialogOpen && <LoginDialog key = {uuid()} dialogClosed = {() => setIsLoginDialogOpen(false)}></LoginDialog> }
+        { isAlertOpen && <AlertPopup key = {uuid()} alertClosed = {() => {setIsAlertOpen(false); setAlertMessage({message: "", severity: ""})}} alertFeedback = {{message: alertMessage.message, severity: alertMessage.severity}}></AlertPopup> }
       </div>
 
       <div className = "exam-buttons">
