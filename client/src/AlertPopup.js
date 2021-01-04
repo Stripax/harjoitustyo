@@ -1,25 +1,37 @@
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import Slide from '@material-ui/core/Slide';
 import React from 'react';
 import { useState } from 'react';
 
-/* function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-} */
-
 const AlertPopup = (props) => {
 
-    const [isAlertOpen, setIsAlertOpen] = useState(true)
+  const [isAlertOpen, setIsAlertOpen] = useState(props.open)
 
-    return (
-        <div>
-            <Snackbar open = {isAlertOpen} autoHideDuration = {6000} onClose = {() => {setIsAlertOpen(false); props.alertClosed()}}>
-                <MuiAlert elevation={6} variant="filled" severity = {props.alertFeedback.severity} onClose = {() => {setIsAlertOpen(false); props.alertClosed()}}>
-                    { props.alertFeedback.message }
-                </MuiAlert>
-            </Snackbar>
-        </div>
-    )
+  return (
+    <div>
+      <Snackbar 
+        open = { isAlertOpen }
+        autoHideDuration = { 6000 }
+        anchorOrigin = {{ horizontal: "left", vertical: "bottom" }}
+        TransitionComponent = { Slide }
+        transitionDuration = {{ enter: 800, exit: 1500 }}
+        TransitionProps = {{ direction: "up" }}
+        onExiting = {() => props.closed()}
+        onClose = {() => setIsAlertOpen(false)}>
+          
+          <MuiAlert
+            elevation = {6}
+            variant = "filled"
+            closeText = "Sulje ikkuna"
+            severity = { props.alertFeedback.severity }
+            onClose = {() => setIsAlertOpen(false)}
+          >
+            { props.alertFeedback.message }
+          </MuiAlert>
+      </Snackbar>
+    </div>
+  )
 }
 
 export default AlertPopup

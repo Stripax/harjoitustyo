@@ -8,10 +8,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Zoom from '@material-ui/core/Zoom';
 
 const LoginDialog = (props) => {
 
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(props.open)
   const [loginData, setLoginData] = useState({
     email: "",
     password: ""
@@ -25,15 +26,32 @@ const LoginDialog = (props) => {
 
     try {
       let result = await axios.post("http://localhost:4000/login/", { email: loginData.email, password: loginData.password })
-    } catch (ex) {
-      console.log(ex.message)
+
+      if (result.status == 200) {
+        props.alertFeedback(result.data.message, result.data.severity)
+        props.isLoginSuccessful(result.data.isLoginSuccessful)
+
+        if (result.data.isLoginSuccessful) {
+          props.userId(result.data.userId)
+        }
+      }
+    
+    } catch (error) {
+      props.alertFeedback(error.message, "error")
     }
   }
 
   return (
     <div>
-      <Dialog open = {isOpen} onClose = {() => {setIsOpen(false); props.dialogClosed()}} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Sisäänkirjautuminen</DialogTitle>
+      <Dialog
+        open = { isOpen }
+        TransitionComponent = { Zoom }
+        transitionDuration = {{ enter: 700, exit: 500 }}
+        onExiting = {() => props.closed()}
+        onClose = {() => setIsOpen(false)}
+        aria-labelledby="form-dialog-title">
+        
+        <DialogTitle id = "form-dialog-title">Sisäänkirjautuminen</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Syötä sähköpostiosoitteesi sekä salasanasi
@@ -42,29 +60,29 @@ const LoginDialog = (props) => {
             autoFocus
             required
             autoComplete = "off"
-            margin="dense"
-            id="email"
-            label="Sähköpostiosoite"
-            type="text"
+            margin = "dense"
+            id = "email"
+            label = "Sähköpostiosoite"
+            type = "text"
             fullWidth
             onChange = {(e) => onChange(e)}
           />
           <TextField
             required
             autoComplete = "off"
-            margin="dense"
-            id="password"
-            label="Salasana"
-            type="password"
+            margin = "dense"
+            id = "password"
+            label = "Salasana"
+            type = "password"
             fullWidth
             onChange = {(e) => onChange(e)}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {setIsOpen(false); props.dialogClosed()}} color="primary">
+          <Button onClick={() => setIsOpen(false)} color = "primary">
             Peruuta
           </Button>
-          <Button onClick={() => {setIsOpen(false); login(); props.dialogClosed()}} disabled = {loginData.email.length < 1 || loginData.password.length < 1} color="primary">
+          <Button onClick={() => {setIsOpen(false); login()}} disabled = { loginData.email.length < 1 || loginData.password.length < 1 } color = "primary">
             Kirjaudu
           </Button>
         </DialogActions>

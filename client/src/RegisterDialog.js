@@ -8,17 +8,18 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Zoom from '@material-ui/core/Zoom';
 
 const RegisterDialog = (props) => {
 
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(props.open)
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false)
   const [newUser, setNewUser] = useState({
-    firstName: null,
-    surname: null,
-    email: null,
-    password: null,
-    passwordCheck: null
+    firstName: "",
+    surname: "",
+    email: "",
+    password: "",
+    passwordCheck: ""
   })
 
   const onChange = (e) => {
@@ -42,6 +43,7 @@ const RegisterDialog = (props) => {
       if (result.status == 200) {
         props.alertFeedback(result.data.message, result.data.severity)
       }
+    
     } catch (error) {
       props.alertFeedback(error.message, "error")
     }
@@ -49,13 +51,21 @@ const RegisterDialog = (props) => {
 
   return (
     <div>
-      <Dialog open = {isOpen} onClose = {() => {setIsOpen(false); props.dialogClosed()}} aria-labelledby="form-dialog-title">
+      <Dialog
+        open = { isOpen }
+        TransitionComponent = { Zoom }
+        transitionDuration = {{ enter: 700, exit: 500 }}
+        onExiting = {() => props.closed()}
+        onClose = {() => setIsOpen(false)}
+        aria-labelledby="form-dialog-title">
+          
         <DialogTitle id="form-dialog-title">Rekisteröidy</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Syötä etu- sekä sukunimi, sähköpostiosoite sekä salasanasi
           </DialogContentText>
           <TextField
+            autoFocus
             autoComplete = "off"
             margin = "dense"
             id = "firstName"
@@ -100,7 +110,7 @@ const RegisterDialog = (props) => {
           <TextField
             autoComplete = "off"
             required
-            error = {!isPasswordCorrect}
+            error = {!isPasswordCorrect || newUser.password.length < 1}
             margin = "dense"
             id = "passwordCheck"
             label = "Anna salasanasi uudestaan"
@@ -111,14 +121,14 @@ const RegisterDialog = (props) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick = {() => {setIsOpen(false); props.dialogClosed()}} color = "primary">
+          <Button onClick = {() => setIsOpen(false)} color = "primary">
             Peruuta
           </Button>
-          <Button onClick = {() => {setIsOpen(false); addNewUser(); props.dialogClosed()}} color = "primary" disabled = {!isPasswordCorrect}>
+          <Button onClick = {() => {setIsOpen(false); addNewUser()}} color = "primary" disabled = { !isPasswordCorrect || newUser.password.length < 1 }>
             Rekisteröidy
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog>  
     </div>
   )
 }

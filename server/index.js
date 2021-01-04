@@ -3,6 +3,8 @@ var cors = require('cors')
 const db = require('./db')
 var bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
+var jwt = require('jsonwebtoken')
+
 const app = express()
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
@@ -33,46 +35,39 @@ app.post('/adduser', (req, res, next) => {
         [req.body.firstName, req.body.surname, req.body.email, hash], (err, result) => {
 
           if (result !== undefined) {
-            res.json({message: "Rekisteröityminen onnistui", severity: "success"})
+            res.json({ message: "Rekisteröityminen onnistui", severity: "success" })
           }
           else if (err) {
-            res.send("Käyttäjä on jo rekisteröitynyt")
-            // return next(err)
+            res.json({ message: "Käyttäjä on jo rekisteröitynyt", severity: "warning" })
           }
           else {
-            res.send("Rekisteröitymisessä tapahtui tunnistamaton virhe")
-            return next(err)
+            res.json({ message: "Rekisteröitymisessä tapahtui tunnistamaton virhe", severity: "error" })
           }          
         })
     })
   }
   catch (ex) {
-    res.status(ex.status).send("Rekisteröitymisessä tapahtui tunnistamaton virhe")
+    res.json({ message: ex.message, severity: "error" })
   }
 })
 
 // Read
 
 app.post('/login/', (req, res, next) => {
-  db.query('SELECT password FROM "user" WHERE email = $1', [req.body.email], (err, result) => {
+  db.query('SELECT password, id FROM "user" WHERE email = $1', [req.body.email], (err, result) => {
 
     try {
       bcrypt.compare(req.body.password, result.rows[0].password, (error, isLoginSuccessful) => {
         
         if (isLoginSuccessful) {
-          console.log("Login successful")
-          res.send(result.rows[0])
+          res.json({ message: "Kirjautuminen onnistui", severity: "info", isLoginSuccessful: true, userId: result.rows[0].id })
         }
         else {
-          console.log("Login failed")
+          res.json({ message: "Tarkista salasana sekä sähköpostiosoite", severity: "warning", isLoginSuccessful: false})
         }
       })
     } catch (ex) {
-      console.log(ex.message)
-    }
-    
-    if (err) {
-      return next(err)
+      res.json({ message: ex.message, severity: "error", isLoginSuccessful: false })
     }
   })
 })

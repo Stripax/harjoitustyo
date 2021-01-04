@@ -122,6 +122,7 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, [])
   const [activeExam, setActiveExam] = useState(-1)
+  const [userId, setUserId] = useState(0)
   const [alertMessage, setAlertMessage] = useState({ message: "", severity: ""})
   const [isDataInitialized, setIsDataInitialized] = useState(false)
   const [isQuestionsInitialized, setIsQuestionsInitialized] = useState(false)
@@ -250,26 +251,34 @@ function App() {
     checked: {},
   })((props) => <Checkbox color="default" {...props} />)
 
+  const logOut = () => {
+    setAlertMessage({ message: "Kirjauduit ulos", severity: "info" })
+    setIsAlertOpen(true)    
+    setIsLoggedIn(false)
+    setUserId(0)
+  }
+
   return (
     <div className = "App">
       <div className = "header">
         <div className = "header-buttons">
-          <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>Tentit</Button>
           <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>Tietoa sovelluksesta</Button>
-          <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>Rekisteröidy</Button>
-          <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>Kirjaudu</Button>          
-          <Button key = {uuid()} color = "inherit" onClick = {() => setIsAdmin(false)}>Poistu</Button>
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit">Admin</Button>}
+          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>Näytä tentit</Button> }
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>Rekisteröidy</Button> }
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>Kirjaudu</Button> }          
+          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => logOut()}>Poistu</Button> }
         </div>
       </div>
 
       <div className = "login-register-dialogs">
-        { isRegisterDialogOpen && <RegisterDialog key = {uuid()} dialogClosed = {() => setIsRegisterDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}}></RegisterDialog> }
-        { isLoginDialogOpen && <LoginDialog key = {uuid()} dialogClosed = {() => setIsLoginDialogOpen(false)}></LoginDialog> }
-        { isAlertOpen && <AlertPopup key = {uuid()} alertClosed = {() => {setIsAlertOpen(false); setAlertMessage({message: "", severity: ""})}} alertFeedback = {{message: alertMessage.message, severity: alertMessage.severity}}></AlertPopup> }
+        <RegisterDialog key = {uuid()} open = {isRegisterDialogOpen} closed = {() => setIsRegisterDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}}></RegisterDialog>
+        <LoginDialog key = {uuid()} open = {isLoginDialogOpen} closed = {() => setIsLoginDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}} isLoginSuccessful = {(success) => setIsLoggedIn(success)} userId = {(id) => setUserId(id)}></LoginDialog>
+        <AlertPopup key = {uuid()} open = {isAlertOpen} closed = {() => {setIsAlertOpen(false); setAlertMessage({message: "", severity: ""})}} alertFeedback = {{message: alertMessage.message, severity: alertMessage.severity}}></AlertPopup>
       </div>
 
       <div className = "exam-buttons">
-        { isDataInitialized && showExamButtons() }
+        { isLoggedIn && showExamButtons() }
         { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => setIsNewExamNameDialogOpen(true)}></Button> }
         { isNewExamNameDialogOpen && <NewExamNameDialog key = {uuid()} dialogClosed = {() => setIsNewExamNameDialogOpen(false)} dispatch = {(examName) => dispatch({ type: 'addExam', newExamName: examName })}></NewExamNameDialog> }
       </div>
