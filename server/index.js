@@ -60,6 +60,9 @@ app.post('/login/', (req, res, next) => {
       bcrypt.compare(req.body.password, result.rows[0].password, (error, isLoginSuccessful) => {
         
         if (isLoginSuccessful) {
+          // jwt.sign({
+          //   data: 'foobar'
+          // }, 'secret', { expiresIn: '1h' })
           res.json({ message: "Kirjautuminen onnistui", severity: "info", isLoginSuccessful: true, userId: result.rows[0].id })
         }
         else {

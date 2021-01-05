@@ -62,7 +62,7 @@ const RegisterDialog = (props) => {
         <DialogTitle id="form-dialog-title">Rekisteröidy</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Syötä etu- sekä sukunimi, sähköpostiosoite sekä salasanasi
+            Syötä etu- ja sukunimi, sähköpostiosoite sekä salasanasi
           </DialogContentText>
           <TextField
             autoFocus
