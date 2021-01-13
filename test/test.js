@@ -1,4 +1,4 @@
-var assert = require('assert')
+var assert = require('chai').assert
 
 
 // ---------- SERVER TESTS ----------
@@ -6,7 +6,7 @@ var assert = require('assert')
 describe('Server tests', function() {
   describe('1 equals 1', function() {
     it('should return true since 1 equals 1', function() {
-      assert.strictEqual(NaN, NaN, "test failed")
+      assert.equal(1, 1, "test failed")
     })
   })
 })

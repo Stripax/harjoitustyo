@@ -3,6 +3,7 @@ import { useState, useEffect, useReducer } from 'react';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 import './App.css';
+import LocalizedStrings from 'react-localization'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -123,7 +124,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, [])
   const [activeExam, setActiveExam] = useState(-1)
   const [userId, setUserId] = useState(0)
-  const [alertMessage, setAlertMessage] = useState({ message: "", severity: ""})
+  const [alertMessage, setAlertMessage] = useState({ message: "", severity: "" })
   const [isDataInitialized, setIsDataInitialized] = useState(false)
   const [isQuestionsInitialized, setIsQuestionsInitialized] = useState(false)
   const [isQuestionChoicesInitialized, setIsQuestionChoicesInitialized] = useState(false)
@@ -251,23 +252,60 @@ function App() {
     checked: {},
   })((props) => <Checkbox color="default" {...props} />)
 
+// EI TOIMI HALUTULLA TAVALLA
+  const alertMessageBox = (message, severity) => {
+    setIsAlertOpen(true)
+    AlertPopup({open: true, alertFeedback: { message: message, severity: severity }})
+  }
+
   const logOut = () => {
-    setAlertMessage({ message: "Kirjauduit ulos", severity: "info" })
+    alertMessageBox("Kirjauduit ulos", "info")
     setIsAlertOpen(true)    
     setIsLoggedIn(false)
     setUserId(0)
   }
 
+  const changeLanguage = () => {
+    if (buttonTexts.getLanguage() == "fi") {
+      buttonTexts.setLanguage('en')
+      alertMessageBox("Language switched to English", "info")
+    }
+    else {
+      buttonTexts.setLanguage('fi')
+      alertMessageBox("Kieli vaihdettu suomeksi", "info")
+    }
+  }
+
+  const buttonTexts = new LocalizedStrings({
+    fi: {
+      info: "Tietoa sovelluksesta",
+      admin: "Järjestelmänvalvoja",
+      exams: "Näytät tentit",
+      signup: "Rekisteröidy",
+      signin: "Kirjaudu",
+      exit: "Poistu"
+    },
+    en: {
+      info: "About",
+      admin: "Admin",
+      exams: "Show exams",
+      signup: "Signup",
+      signin: "Sign in",
+      exit: "Exit"
+    }
+  })
+
   return (
     <div className = "App">
       <div className = "header">
         <div className = "header-buttons">
-          <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>Tietoa sovelluksesta</Button>
-          { !isLoggedIn && <Button key = {uuid()} color = "inherit">Admin</Button>}
-          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>Näytä tentit</Button> }
-          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>Rekisteröidy</Button> }
-          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>Kirjaudu</Button> }          
-          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => logOut()}>Poistu</Button> }
+          <Button key = {uuid()} color = "inherit" onClick = {() => changeLanguage()}>FI / EN</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>{buttonTexts.info}</Button>
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit">{buttonTexts.admin}</Button>}
+          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>{buttonTexts.exams}</Button> }
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>{buttonTexts.signup}</Button> }
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>{buttonTexts.signin}</Button> }          
+          { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => logOut()}>{buttonTexts.exit}</Button> }
         </div>
       </div>
 
