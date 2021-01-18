@@ -45,3 +45,16 @@
   font-size: 30px;
   font-weight: 300;
 }
+
+.dragdrop {
+  background-color: white;
+  padding: 5px;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5%;
+}
+
+.dragdrop ul {
+  list-style: none;
+}

@@ -55,7 +55,7 @@ const RegisterDialog = (props) => {
         open = { isOpen }
         TransitionComponent = { Zoom }
         transitionDuration = {{ enter: 700, exit: 500 }}
-        onExiting = {() => props.closed()}
+        onExited = {() => {props.closed(); setIsOpen(false)}}
         onClose = {() => setIsOpen(false)}
         aria-labelledby="form-dialog-title">
           

@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 import './App.css';
 import LocalizedStrings from 'react-localization'
+import {useDropzone} from 'react-dropzone'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -18,6 +19,7 @@ import TestResultsDemo from './TestResultsDemo';
 import RegisterDialog from './RegisterDialog';
 import LoginDialog from './LoginDialog';
 import AlertPopup from './AlertPopup';
+import DragDrop from './DragDrop'
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -253,14 +255,13 @@ function App() {
   })((props) => <Checkbox color="default" {...props} />)
 
 // EI TOIMI HALUTULLA TAVALLA
-  const alertMessageBox = (message, severity) => {
+  const alertMessageBox = (msg, svr) => {
     setIsAlertOpen(true)
-    AlertPopup({open: true, alertFeedback: { message: message, severity: severity }})
+    setAlertMessage({ message: msg, severity: svr })
   }
 
   const logOut = () => {
-    alertMessageBox("Kirjauduit ulos", "info")
-    setIsAlertOpen(true)    
+    alertMessageBox("Kirjauduit ulos", "info")  
     setIsLoggedIn(false)
     setUserId(0)
   }
@@ -277,14 +278,6 @@ function App() {
   }
 
   const buttonTexts = new LocalizedStrings({
-    fi: {
-      info: "Tietoa sovelluksesta",
-      admin: "Järjestelmänvalvoja",
-      exams: "Näytät tentit",
-      signup: "Rekisteröidy",
-      signin: "Kirjaudu",
-      exit: "Poistu"
-    },
     en: {
       info: "About",
       admin: "Admin",
@@ -292,6 +285,14 @@ function App() {
       signup: "Signup",
       signin: "Sign in",
       exit: "Exit"
+    },
+    fi: {
+      info: "Tietoa sovelluksesta",
+      admin: "Järjestelmänvalvoja",
+      exams: "Näytät tentit",
+      signup: "Rekisteröidy",
+      signin: "Kirjaudu",
+      exit: "Poistu"
     }
   })
 
@@ -304,7 +305,7 @@ function App() {
           { !isLoggedIn && <Button key = {uuid()} color = "inherit">{buttonTexts.admin}</Button>}
           { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>{buttonTexts.exams}</Button> }
           { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>{buttonTexts.signup}</Button> }
-          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>{buttonTexts.signin}</Button> }          
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>{buttonTexts.signin}</Button> }
           { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => logOut()}>{buttonTexts.exit}</Button> }
         </div>
       </div>
@@ -340,6 +341,8 @@ function App() {
         { activeExam >= 0 && <Button key = {uuid()} variant = "contained" color = "primary" onClick = {() => setIsDemoShown(true)}>Tulosten demo</Button> }
         { isDemoShown && <TestResultsDemo></TestResultsDemo> }
       </div> */}
+
+      {isLoggedIn && <DragDrop key = {uuid()}></DragDrop>}
       
     </div>
   )
