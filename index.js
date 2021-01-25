@@ -8,7 +8,7 @@ const WebSocket = require('ws')
 const wss = new WebSocket.Server({ port: 8080 })
 
 const app = express()
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(bodyParser.json())
 const port = 4000
 
