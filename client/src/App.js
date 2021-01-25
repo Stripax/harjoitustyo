@@ -22,6 +22,22 @@ import AlertPopup from './AlertPopup';
 import DragDrop from './DragDrop'
 import Chat from './Chat'
 
+var path = null
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      path = "https://exam-program.herokuapp.com/" 
+      break
+    case 'development':
+      path = "http://localhost:4000/"
+      break
+    case 'test':
+      path = "http://localhost:4000/"
+      break
+    default:
+      throw "Environment not set properly!"
+  }
+
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
   let examId = deepCopy.findIndex(exam => exam.id == action.activeExam)
@@ -142,22 +158,6 @@ function App() {
   const [isChatWindowOpen, setIsChatWindowOpen] = useState(false)
 
   const connection = new WebSocket("ws://localhost:8080")
-
-  var path = null
-
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      path = "https://exam-program.herokuapp.com/" 
-      break
-    case 'development':
-      path = "http://localhost:4000/"
-      break
-    case 'test':
-      path = "http://localhost:4000/"
-      break
-    default:
-      throw "Environment not set properly!"
-  }
 
   useEffect (() => {
 
