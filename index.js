@@ -21,6 +21,7 @@ var corsOptions = {
 }
 
 // Websocket server --> https://dev.to/spukas/learn-websockets-by-building-simple-chat-app-dee
+// Testiä
 
 // waits for connection to be established from the client
 // the callback argument ws is a unique for each client

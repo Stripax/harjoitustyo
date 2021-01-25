@@ -1,4 +1,5 @@
 const { Pool } = require('pg')
+
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -6,6 +7,10 @@ const pool = new Pool({
     password: 'McCandy0',
     port: 5432,
   })
+
+var connectInfo = {}
+
+
 
 module.exports = {
   query: (text, params, callback) => {
