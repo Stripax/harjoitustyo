@@ -4,16 +4,43 @@ const db = require('./db')
 var bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken')
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({ port: 8080 })
 
 const app = express()
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 const port = 4000
 
+app.use(express.static('./client/build'))
+var path = require('path')
+
 var corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
+
+// Websocket server --> https://dev.to/spukas/learn-websockets-by-building-simple-chat-app-dee
+
+// waits for connection to be established from the client
+// the callback argument ws is a unique for each client
+wss.on('connection', (ws) => {
+
+  // runs a callback on message event
+  ws.on('message', (data) => {
+
+    // sends the data to all connected clients
+    wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(data)
+        }
+    })
+  })
+
+  ws.on('close', () => {
+    console.log("Yhteys katkaistu")
+  })
+})
 
 // Create
 
@@ -122,6 +149,10 @@ app.delete('/exam/:id', (req, res, next) => {
     }
     res.send("Tentin poisto onnistui!")
   })
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'client/build/index.html'))
 })
 
 app.listen(port, () => {

@@ -20,6 +20,7 @@ import RegisterDialog from './RegisterDialog';
 import LoginDialog from './LoginDialog';
 import AlertPopup from './AlertPopup';
 import DragDrop from './DragDrop'
+import Chat from './Chat'
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -138,6 +139,9 @@ function App() {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [isDemoShown, setIsDemoShown] = useState(false)
+  const [isChatWindowOpen, setIsChatWindowOpen] = useState(false)
+
+  const connection = new WebSocket("ws://localhost:8080")
 
   useEffect (() => {
 
@@ -279,6 +283,7 @@ function App() {
 
   const buttonTexts = new LocalizedStrings({
     en: {
+      chat: "Chat",
       info: "About",
       admin: "Admin",
       exams: "Show exams",
@@ -287,6 +292,7 @@ function App() {
       exit: "Exit"
     },
     fi: {
+      chat: "Keskustelu",
       info: "Tietoa sovelluksesta",
       admin: "Järjestelmänvalvoja",
       exams: "Näytät tentit",
@@ -300,14 +306,19 @@ function App() {
     <div className = "App">
       <div className = "header">
         <div className = "header-buttons">
-          <Button key = {uuid()} color = "inherit" onClick = {() => changeLanguage()}>FI / EN</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => changeLanguage()} disabled>FI / EN</Button>
           <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>{buttonTexts.info}</Button>
-          { !isLoggedIn && <Button key = {uuid()} color = "inherit">{buttonTexts.admin}</Button>}
+          <Button key = {uuid()} color = "inherit" onClick = {() => setIsChatWindowOpen(!isChatWindowOpen)}>{buttonTexts.chat}</Button>
+          { !isLoggedIn && <Button key = {uuid()} color = "inherit" disabled>{buttonTexts.admin}</Button>}
           { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setActiveExam(-1)}>{buttonTexts.exams}</Button> }
           { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsRegisterDialogOpen(true)}>{buttonTexts.signup}</Button> }
           { !isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => setIsLoginDialogOpen(true)}>{buttonTexts.signin}</Button> }
           { isLoggedIn && <Button key = {uuid()} color = "inherit" onClick = {() => logOut()}>{buttonTexts.exit}</Button> }
         </div>
+      </div>
+
+      <div className = "chat-window">
+        { isChatWindowOpen && <Chat key = {uuid()} closed = {() => setIsChatWindowOpen(false)}></Chat> }
       </div>
 
       <div className = "login-register-dialogs">
@@ -342,7 +353,7 @@ function App() {
         { isDemoShown && <TestResultsDemo></TestResultsDemo> }
       </div> */}
 
-      {isLoggedIn && <DragDrop key = {uuid()}></DragDrop>}
+      {/* {isLoggedIn && <DragDrop key = {uuid()}></DragDrop>} */}
       
     </div>
   )
