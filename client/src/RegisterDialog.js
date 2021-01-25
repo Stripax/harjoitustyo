@@ -22,6 +22,22 @@ const RegisterDialog = (props) => {
     passwordCheck: ""
   })
 
+  var path = null
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      path = "https://exam-program.herokuapp.com/" 
+      break
+    case 'development':
+      path = "http://localhost:4000/"
+      break
+    case 'test':
+      path = "http://localhost:4000/"
+      break
+    default:
+      throw "Environment not set properly!"
+  }
+
   const onChange = (e) => {
     setNewUser({ ...newUser, [e.target.id]: e.target.value })
   }
@@ -38,7 +54,7 @@ const RegisterDialog = (props) => {
   const addNewUser = async() => {
 
     try {
-      let result = await axios.post("http://localhost:4000/adduser", { firstName: newUser.firstName, surname: newUser.surname, email: newUser.email, password: newUser.password })
+      let result = await axios.post(path + "adduser", { firstName: newUser.firstName, surname: newUser.surname, email: newUser.email, password: newUser.password })
     
       if (result.status == 200) {
         props.alertFeedback(result.data.message, result.data.severity)

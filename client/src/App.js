@@ -53,7 +53,7 @@ function reducer(state, action) {
       const addNewExam = async() => {
 
         try {
-          let result = await axios.post("http://localhost:4000/exam", { exam_name: action.newExamName })
+          let result = await axios.post(path + "exam", { exam_name: action.newExamName })
           newExam.id = result.request.response
         }
         catch (ex) {
@@ -80,7 +80,7 @@ function reducer(state, action) {
       const checkBoxClicked = async() => {
 
         try {
-          let result = await axios.put("http://localhost:4000/checkbox", { answer_id: action.data.answerId, checked: action.data.checked })
+          let result = await axios.put(path + "checkbox", { answer_id: action.data.answerId, checked: action.data.checked })
         }
         catch (ex) {
           alert(ex.message)
@@ -143,12 +143,28 @@ function App() {
 
   const connection = new WebSocket("ws://localhost:8080")
 
+  var path = null
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      path = "https://exam-program.herokuapp.com/" 
+      break
+    case 'development':
+      path = "http://localhost:4000/"
+      break
+    case 'test':
+      path = "http://localhost:4000/"
+      break
+    default:
+      throw "Environment not set properly!"
+  }
+
   useEffect (() => {
 
     const fetchData = async() => {
 
       try {
-        let resultExams = await axios.get("http://localhost:4000/exams")
+        let resultExams = await axios.get(path + "exams")
 
         if (resultExams.data.length > 0) {
           dispatch({ type: 'getExamNames', data: resultExams.data })
@@ -170,8 +186,8 @@ function App() {
       const fetchData = async() => {
 
         try {
-          let resultQuestions = await axios.get("http://localhost:4000/questions/" + activeExam)
-          let resultChoices = await axios.get("http://localhost:4000/answers/" + activeExam)
+          let resultQuestions = await axios.get(path + "questions/" + activeExam)
+          let resultChoices = await axios.get(path + "answers/" + activeExam)
 
           if (resultQuestions.data.length > 0) {
             dispatch({ type: 'getQuestions', data: resultQuestions.data, activeExam: activeExam })

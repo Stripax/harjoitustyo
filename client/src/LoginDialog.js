@@ -18,6 +18,22 @@ const LoginDialog = (props) => {
     password: ""
   })
 
+  var path = null
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      path = "https://exam-program.herokuapp.com/" 
+      break
+    case 'development':
+      path = "http://localhost:4000/"
+      break
+    case 'test':
+      path = "http://localhost:4000/"
+      break
+    default:
+      throw "Environment not set properly!"
+  }
+
   const onChange = (e) => {
     setLoginData({ ...loginData, [e.target.id]: e.target.value })
   }
@@ -25,7 +41,7 @@ const LoginDialog = (props) => {
   const login = async() => {
 
     try {
-      let result = await axios.post("http://localhost:4000/login/", { email: loginData.email, password: loginData.password })
+      let result = await axios.post(path + "login/", { email: loginData.email, password: loginData.password })
 
       if (result.status == 200) {
         props.alertFeedback(result.data.message, result.data.severity)
