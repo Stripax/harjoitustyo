@@ -4,8 +4,8 @@ const db = require('./db')
 var bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken')
-const WebSocket = require('ws')
-const wss = new WebSocket.Server({ port: 8080 })
+// const WebSocket = require('ws')
+// const wss = new WebSocket.Server({ port: 8080 })
 
 const app = express()
 app.use(cors())
@@ -25,37 +25,44 @@ var corsOptions = {
 
 // waits for connection to be established from the client
 // the callback argument ws is a unique for each client
-wss.on('connection', (ws) => {
+// wss.on('connection', (ws) => {
 
-  // runs a callback on message event
-  ws.on('message', (data) => {
+//   // runs a callback on message event
+//   ws.on('message', (data) => {
 
-    // sends the data to all connected clients
-    wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(data)
-        }
-    })
-  })
+//     // sends the data to all connected clients
+//     wss.clients.forEach((client) => {
+//         if (client.readyState === WebSocket.OPEN) {
+//           client.send(data)
+//         }
+//     })
+//   })
 
-  ws.on('close', () => {
-    console.log("Yhteys katkaistu")
-  })
-})
+//   ws.on('close', () => {
+//     console.log("Yhteys katkaistu")
+//   })
+// })
 
 // Create
 
-app.post('/exam', (req, res, next) => {
-  db.query('INSERT INTO exam (exam_name, exam_score, exam_startdate, exam_enddate, min_points) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [req.body.exam_name, req.body.exam_score, req.body.exam_startdate, req.body.exam_enddate, req.body.min_points], (err, result) => {
+app.post('/exam/', (req, res, next) => {
+  db.query('INSERT INTO exam (exam_name, exam_score, exam_startdate, exam_enddate) VALUES ($1, $2, $3, $4) RETURNING id',
+    [req.body.examName, req.body.examScore, req.body.startdate, req.body.enddate], (err, result) => {
+      
+      if (result !== undefined) {
+        res.json({ message: "Tentin lisääminen onnistui", severity: "success", id: result.rows[0].id })
+      }
+      else {
+        res.json({ message: "Tentin lisääminen epäonnistui", severity: "warning" })
+      }
+
     if (err) {
       return next(err)
     }
-    res.send(result.rows[0].id.toString())
   })
 })
  
-app.post('/adduser', (req, res, next) => {
+app.post('/adduser/', (req, res, next) => {
 
   try {
     bcrypt.hash(req.body.password, 12, (error, hash) => {
@@ -82,7 +89,7 @@ app.post('/adduser', (req, res, next) => {
 // Read
 
 app.post('/login/', (req, res, next) => {
-  db.query('SELECT password, id FROM "user" WHERE email = $1', [req.body.email], (err, result) => {
+  db.query('SELECT password, id, is_admin FROM "user" WHERE email = $1', [req.body.email], (err, result) => {
 
     try {
       bcrypt.compare(req.body.password, result.rows[0].password, (error, isLoginSuccessful) => {
@@ -91,7 +98,7 @@ app.post('/login/', (req, res, next) => {
           // jwt.sign({
           //   data: 'foobar'
           // }, 'secret', { expiresIn: '1h' })
-          res.json({ message: "Kirjautuminen onnistui", severity: "info", isLoginSuccessful: true, userId: result.rows[0].id })
+          res.json({ message: "Kirjautuminen onnistui", severity: "success", isLoginSuccessful: true, userId: result.rows[0].id, isAdmin: result.rows[0].is_admin })
         }
         else {
           res.json({ message: "Tarkista salasana sekä sähköpostiosoite", severity: "warning", isLoginSuccessful: false})

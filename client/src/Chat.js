@@ -15,7 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
 
-const connection = new WebSocket("ws://localhost:8080")
+// const connection = new WebSocket("ws://localhost:8080")
 
 const useStyles = makeStyles({
   table: {
@@ -41,9 +41,9 @@ const Chat = () => {
   const [messageText, setMessageText] = useState("")
   const classes = useStyles();
 
-  const sendMessage = () => {
-    connection.send(messageText)
-  }
+//   const sendMessage = () => {
+//     connection.send(messageText)
+//   }
 
   const onChange = (e) => {
     setMessageText(e.target.value)
@@ -109,7 +109,7 @@ const Chat = () => {
                         <TextField label="Kirjoita viesti" fullWidth onChange = {(e) => onChange(e)} value = {messageText} autoFocus/>
                     </Grid>
                     <Grid xs={1} align="right">
-                        <Fab color="primary" aria-label="add" onClick = {() => {sendMessage(); setMessageText("")}}><SendIcon /></Fab>
+                        {/* <Fab color="primary" aria-label="add" onClick = {() => {sendMessage(); setMessageText("")}}><SendIcon /></Fab> */}
                     </Grid>
                 </Grid>
             </Grid>

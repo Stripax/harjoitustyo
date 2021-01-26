@@ -54,7 +54,7 @@ const RegisterDialog = (props) => {
   const addNewUser = async() => {
 
     try {
-      let result = await axios.post(path + "adduser", { firstName: newUser.firstName, surname: newUser.surname, email: newUser.email, password: newUser.password })
+      let result = await axios.post(path + "adduser/", { firstName: newUser.firstName, surname: newUser.surname, email: newUser.email, password: newUser.password })
     
       if (result.status == 200) {
         props.alertFeedback(result.data.message, result.data.severity)
@@ -71,7 +71,7 @@ const RegisterDialog = (props) => {
         open = { isOpen }
         TransitionComponent = { Zoom }
         transitionDuration = {{ enter: 700, exit: 500 }}
-        onExited = {() => {props.closed(); setIsOpen(false)}}
+        onExiting = {() => {props.closed(); setIsOpen(false)}}
         onClose = {() => setIsOpen(false)}
         aria-labelledby="form-dialog-title">
           

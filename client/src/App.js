@@ -64,21 +64,7 @@ function reducer(state, action) {
       return deepCopy
 
     case 'addExam':
-      let newExam = { id: null, exam_name: action.newExamName, exam_score: null, exam_startdate: null, exam_enddate: null, min_points: null, grade_limits: null }
-
-      const addNewExam = async() => {
-
-        try {
-          let result = await axios.post(path + "exam", { exam_name: action.newExamName })
-          newExam.id = result.request.response
-        }
-        catch (ex) {
-          alert(ex.message)
-        }
-      }
-
-      addNewExam()
-      deepCopy.push(newExam)
+      deepCopy.push(action.newExamName)
       return deepCopy
 
     case 'addQuestion':
@@ -157,7 +143,7 @@ function App() {
   const [isDemoShown, setIsDemoShown] = useState(false)
   const [isChatWindowOpen, setIsChatWindowOpen] = useState(false)
 
-  const connection = new WebSocket("ws://localhost:8080")
+  // const connection = new WebSocket("ws://localhost:8080")
 
   useEffect (() => {
 
@@ -172,7 +158,7 @@ function App() {
         }
       }
       catch (ex) {
-        setAlertMessage({message: ex.message, severity: "error"})
+        setAlertMessage({ message: ex.message, severity: "error" })
         setIsAlertOpen(true)
       }
     }
@@ -200,7 +186,8 @@ function App() {
           }
         }
         catch (ex) {
-          alert(ex.message)
+          setAlertMessage({ message: ex.message, severity: "error" })
+          setIsAlertOpen(true)
         }
       }
 
@@ -275,25 +262,29 @@ function App() {
   })((props) => <Checkbox color="default" {...props} />)
 
 // EI TOIMI HALUTULLA TAVALLA
-  const alertMessageBox = (msg, svr) => {
-    setIsAlertOpen(true)
-    setAlertMessage({ message: msg, severity: svr })
-  }
+  // const alertMessageBox = (msg, svr) => {
+  //   setIsAlertOpen(true)
+  //   setAlertMessage({ message: msg, severity: svr })
+  // }
 
   const logOut = () => {
-    alertMessageBox("Kirjauduit ulos", "info")  
+    setAlertMessage({ message: "Kirjauduit ulos", severity: "info" })
+    setIsAlertOpen(true)
     setIsLoggedIn(false)
+    setIsAdmin(false)
     setUserId(0)
   }
 
   const changeLanguage = () => {
     if (buttonTexts.getLanguage() == "fi") {
       buttonTexts.setLanguage('en')
-      alertMessageBox("Language switched to English", "info")
+      setAlertMessage({ message: "Language switched to English", severity: "info" })
+      setIsAlertOpen(true)
     }
     else {
       buttonTexts.setLanguage('fi')
-      alertMessageBox("Kieli vaihdettu suomeksi", "info")
+      setAlertMessage({ message: "Kieli vaihdettu suomeksi", severity: "info" })
+      setIsAlertOpen(true)
     }
   }
 
@@ -322,7 +313,7 @@ function App() {
     <div className = "App">
       <div className = "header">
         <div className = "header-buttons">
-          <Button key = {uuid()} color = "inherit" onClick = {() => changeLanguage()} disabled>FI / EN</Button>
+          <Button key = {uuid()} color = "inherit" onClick = {() => changeLanguage()}>FI / EN</Button>
           <Button key = {uuid()} color = "inherit" onClick = {() => window.open("https://www.youtube.com/watch?v=sAqnNWUD79Q", "_blank")}>{buttonTexts.info}</Button>
           <Button key = {uuid()} color = "inherit" onClick = {() => setIsChatWindowOpen(!isChatWindowOpen)}>{buttonTexts.chat}</Button>
           { !isLoggedIn && <Button key = {uuid()} color = "inherit" disabled>{buttonTexts.admin}</Button>}
@@ -339,14 +330,14 @@ function App() {
 
       <div className = "login-register-dialogs">
         <RegisterDialog key = {uuid()} open = {isRegisterDialogOpen} closed = {() => setIsRegisterDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}}></RegisterDialog>
-        <LoginDialog key = {uuid()} open = {isLoginDialogOpen} closed = {() => setIsLoginDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}} isLoginSuccessful = {(success) => setIsLoggedIn(success)} userId = {(id) => setUserId(id)}></LoginDialog>
+        <LoginDialog key = {uuid()} open = {isLoginDialogOpen} closed = {() => setIsLoginDialogOpen(false)} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}} isLoginSuccessful = {(success) => setIsLoggedIn(success)} userId = {(id) => setUserId(id)} admin = {() => setIsAdmin(true)}></LoginDialog>
         <AlertPopup key = {uuid()} open = {isAlertOpen} closed = {() => {setIsAlertOpen(false); setAlertMessage({message: "", severity: ""})}} alertFeedback = {{message: alertMessage.message, severity: alertMessage.severity}}></AlertPopup>
       </div>
 
       <div className = "exam-buttons">
         { isLoggedIn && showExamButtons() }
         { isAdmin && <Button key = {uuid()} color = "primary" startIcon = {<AddCircleOutlineIcon />} onClick = {() => setIsNewExamNameDialogOpen(true)}></Button> }
-        { isNewExamNameDialogOpen && <NewExamNameDialog key = {uuid()} dialogClosed = {() => setIsNewExamNameDialogOpen(false)} dispatch = {(examName) => dispatch({ type: 'addExam', newExamName: examName })}></NewExamNameDialog> }
+        { isNewExamNameDialogOpen && <NewExamNameDialog key = {uuid()} closed = {() => {setIsNewExamNameDialogOpen(false); setAlertMessage({ message: "", severity: ""})}} alertFeedback = {(message, severity) => {setIsAlertOpen(true); setAlertMessage({message: message, severity: severity})}} dispatch = {(newName) => dispatch({ type: 'addExam', newExamName: newName })}></NewExamNameDialog> }
       </div>
 
       <div className = "main-body">

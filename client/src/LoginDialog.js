@@ -44,8 +44,16 @@ const LoginDialog = (props) => {
       let result = await axios.post(path + "login/", { email: loginData.email, password: loginData.password })
 
       if (result.status == 200) {
-        props.alertFeedback(result.data.message, result.data.severity)
-        props.isLoginSuccessful(result.data.isLoginSuccessful)
+
+        if (result.data.isAdmin) {
+          props.alertFeedback("Tervetuloa Admin", "success")
+          props.isLoginSuccessful(result.data.isLoginSuccessful)
+          props.admin()
+        }
+        else {
+          props.alertFeedback(result.data.message, result.data.severity)
+          props.isLoginSuccessful(result.data.isLoginSuccessful)
+        }        
 
         if (result.data.isLoginSuccessful) {
           props.userId(result.data.userId)
@@ -63,7 +71,7 @@ const LoginDialog = (props) => {
         open = { isOpen }
         TransitionComponent = { Zoom }
         transitionDuration = {{ enter: 700, exit: 500 }}
-        onExited = {() => {props.closed(); setIsOpen(false)}}
+        onExiting = {() => {props.closed(); setIsOpen(false)}}
         onClose = {() => setIsOpen(false)}
         aria-labelledby="form-dialog-title">
         

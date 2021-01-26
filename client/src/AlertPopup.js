@@ -17,7 +17,7 @@ const AlertPopup = (props) => {
         TransitionComponent = { Slide }
         transitionDuration = {{ enter: 800, exit: 1200 }}
         TransitionProps = {{ direction: "up" }}
-        onExited = {() => {props.closed(); setIsAlertOpen(false)}}
+        onExiting = {() => {props.closed(); setIsAlertOpen(false)}}
         onClose = {() => setIsAlertOpen(false)}>
           
           <MuiAlert
